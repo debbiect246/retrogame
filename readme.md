@@ -1,32 +1,42 @@
-# [Team 8](url of game)
+# SuperJim 2021 
 
-We are a group of coders, Matt, Monika, Matt, Ed, Deborah -   team 8 in the  CI retro games hackathon, which is taking place in August 2021.  We used git hub projects [github projects](https://github.com/debbiect246/retrogame/projects)  to keep track of all the tasks we had to do to make this app and we used github collaboratively, creating a repo which we all contributed to.
+[SuperJim 2021](https://debbiect246.github.io/retrogame/) is a retrogame produced by team 8 - The Retronauts in the CI retrogame hackathon. 
+
+We are a group of coders, Matt, Monika, Ed, Deborah -   team 8 in the  CI retro games hackathon, which took place in August 2021.  We used git hub projects [github projects](https://github.com/debbiect246/retrogame/projects)  to keep track of all the tasks we had to do to make this app and we used github collaboratively, creating a repo which we all contributed to.
 
 
-This app recreates the Mario game with a twist! Mario was a popular platform game in the 1990s which was very popular with gamers.  [Mario] still is a popular game (https://en.wikipedia.org/wiki/Super_Mario#:~:text=The%20Super%20Mario%20games%20are%20typically%20in%20the,across%20platforms%20and%20atop%20enemies%20in%20themed%20levels) which is still played by gamers and features a character - Mario who has to avoid obstacles and rescue a character- once this is done the game ends.  
-
+This app recreates the Mario game with a twist! Mario was a popular platform game in the 1990s which was very popular with gamers.  [Mario](https://en.wikipedia.org/wiki/Super_Mario#:~:text=The%20Super%20Mario%20games%20are%20typically%20in%20the,across%20platforms%20and%20atop%20enemies%20in%20themed%20levels) still is a popular game which is still played by gamers and features a character - Mario who has to avoid obstacles and rescue a character- once this is done the game ends.  In our game the central character is a student of code institute and he has to collect 6 coins which represent projects needed to pass the course.  Along the way there are "baddies" who try to stop this happening including examples of bad code!  The character has won the game when he has got through to the end of the game having collected all 6 projects needed and having survived all levels.
 
 
 ## Wireframes
 
-In order to have some basic structure in place and to be on the same page, we created [wireframes](/wireframes/wireframes.pdf)  and were working from these when creating our app.
+In order to have some basic structure in place and to be on the same page, we created the following wireframes for the game.  All wireframes were produced by Matt in either [balsamiq ](https://balsamiq.com/) - black and white images, or in [figma](https://www.figma.com/)- colour images.
+
+1. [wireframes for the game instructions](/wireframes/home-page-instructions-modal.png).  
+2. [wireframes for the home page](/wireframes/home-page.png).
+3. [wireframes for style](/wireframs/style-details.png).
+4. [wireframes for super-jim](/wireframes/super-jim.png).
+
+
 
    
 ## UX
 
 ### User stories
 
-1.  User wants to see Mario as the central character on the screen.
-1.  User wants Mario to avoid obstacles to achieve a goal.
+1. User wants to see Super Jim as the central character on the screen.
+2. User wants Super Jim to avoid baddies to collect 6 coins which represent project.
+3. User wants Super Jim to move up levels of increasing difficulty.
+4. User wants a points system for scoring points.
+5. User wants a leaderboard so that they can check out highest scores.
+6. User wants an instruction screen explaining how game works.
 
 ## Design features
 
 * Start screen 
 * Instructions screen
 * Play button
-* Platform game screen with background and Mario character
-* Site must be responsive and display well on different size screens.
-
+* Platform game screen with background and Super Jim character
 
 
 ## Technologies Used
@@ -58,26 +68,37 @@ We tested each part of our user story to check it worked as expected.
 
 ## Deployment
 
-App was deployed to github pages
+App was deployed to github pages. Game can be accessed [here](https://debbiect246.github.io/retrogame/) or by clicking on the game title at the start of this readme.
 
 ## Breakdown of steps involved in creating the app
 
 We all worked in different ways but overall the process used by collaborators was as follows:
 
-1. One collaborator created a new github repo and initialised a local repo for the project.
-2. An env file was created to hold passwords for the atlas  database   This file was put in .gitignore.
-3. Each collaborator had to install the relevant files in order to be able to run flask in their local environment.
-4. Each collaborator created a local branch to work on and created pull requests which were then merged into the project once they had been checked by other members of the team.
+1. Debbie created a new github repo for the project.
+2. Branches were created for Debbie, Matt, Ed and Monica and work was done on these branches and then pull requests made.  Pull requests were reviewed by other team members and merged when appropriate.
+3. Team discussions were held about how to develop the game.  
+4. Team coding sessions were done so that those people working on different parts of functionality for the game were able to ask further questions and get support in live time.
+5.  A project board was created in github and team members were able to select cards to work on.  Matt spent some time on designing wireframes and assets for the game, Ed and Monica spent some time on the assets and scenes for the game and Debbie spent time setting up the repo, reviewing and merging some pull requests - other people could also do this for other team member's code.  Debbie also spent time updating the readme at regular intervals and coding the instruction screen and leaderboard.
+6. Testing was done at regular intervals and the game reviewed during group discussions each day, usually starting around 8pm and going forward into the evening.
 
 
   
 ## Future improvements
 
- 1. 
+ 1. Add further levels to the game.
+ 2. Super Jim also could have to collect useful videos etc on his journey to get his projects done which would add to his point score.
+ 3. Countdown timer could be added to the game.
  
 
 ## Credits
 
+
+
 ### Media  
+
+Matt used [this colour palette](https://lospec.com/palette-list/endesga-64) for the design for the game.
+
+Matt and  Ed used images from [this website](https://themushroomkingdom.net/media/smb/wav) which were modified to create the character and objects used in the game.
+
 
 ### Borrowed Code 
