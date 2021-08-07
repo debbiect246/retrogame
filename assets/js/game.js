@@ -90,7 +90,7 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
 })
 
 const MOVE_SPEED = 120
-const PLAYER_JUMP_FORCE = 350
+const PLAYER_JUMP_FORCE = 520
 const CERTAIN_DEATH = 1500
 
 const BADDIE_SPEED = 60
@@ -120,7 +120,7 @@ scene("game", ({level, score}) => {
     const levelCfg = {
         width: 32,
         height: 32,
-        '-': [sprite('blank'), solid(), scale(0.75)],
+        '-': [sprite('blank'), solid(), scale(1)],
         'b': [sprite('brick'), solid(), scale(0.75), 'destructible', 'wall'],
         'B': [sprite('brownBrick'), solid(), scale(0.75), 'destructible', 'wall'],
         'c': [sprite('coin'), scale(0.75), 'coin'],
@@ -188,6 +188,20 @@ scene("game", ({level, score}) => {
             play('break')
             destroy(obj)
         }
+
+        if (obj.is('mystery-box')) {
+            gameLevel.spawn('C', obj.gridPos.sub(-0.15,1))
+            destroy(obj)
+            gameLevel.spawn('-', obj.gridPos.sub(0,0))
+            play('new')
+        }
+    })
+
+    player.collides('coffee', (coffee) => {
+        play('powerup')
+        destroy(coffee)
+        scoreLabel.value += 10
+        scoreLabel.text = scoreLabel.value
     })
 
     player.collides('coin', (coin) => {
