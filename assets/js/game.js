@@ -9,6 +9,7 @@ kaboom(
 );
 
 loadRoot('assets/sprites/')
+
 loadSprite("brick", "brick.png")
 loadSprite("coin", "ci-coin.png")
 loadSprite("ground", "ground.png")
@@ -35,12 +36,16 @@ loadSprite("jim", "super-jim-32x32.png", {
 
 const MOVE_SPEED = 120
 const JUMP_FORCE = 350
+const CERTAIN_DEATH = 1500
 
+const BADDIE_SPEED = 60
+ 
 let isJumping = false
 let isMoving = false
 
-scene("game", () => {
+scene("game", ({level, score}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
+    camIgnore(["bg", "ui"]);
 
     const map = [
         '                                                  ',
@@ -61,10 +66,10 @@ scene("game", () => {
     const levelCfg = {
         width: 20,
         height: 20,
-        'b': [sprite('brick'), solid(), scale(0.75)],
-        'c': [sprite('coin'), scale(0.75)],
+        'b': [sprite('brick'), solid(), scale(0.75), 'destructible'],
+        'c': [sprite('coin'), scale(0.75), 'coin'],
         'g': [sprite('ground'), solid(), scale(1)],
-        'i': [sprite('imposter'), body(), scale(1)],
+        'i': [sprite('imposter'), body(), scale(1), 'baddie'],
         's': [sprite('stack'), scale(1)],
         'y': [sprite('youtube'), scale(0.75)],
     }
@@ -72,11 +77,11 @@ scene("game", () => {
     const gameLevel = addLevel(map, levelCfg)
 
     const scoreLabel = add([
-        text('test'),
+        text(score),
         pos(30, 6),
         layer('ui'),
         {
-            value: 'test'
+            value: score,
         }
     ])
 
@@ -84,7 +89,7 @@ scene("game", () => {
 
     const player = add([
         sprite('jim'),
-        scale(1, 1),
+        scale(1),
         solid(),
         pos(30, 0),
         body(),
@@ -92,16 +97,47 @@ scene("game", () => {
     ])
     
     player.action(() => {
+        camPos(player.pos)
         if (player.grounded() && !isMoving) {
             player.play('idle')
             isJumping = false
         }
         else if (player.grounded() && isMoving) {
             player.play('run')
+
         }
-        camPos(player.pos)
-        // console.log(player.curAnim());
+        if (player.pos.y > CERTAIN_DEATH/3) {
+            camScale(4);
+        }
+        if (player.pos.y >= CERTAIN_DEATH) {
+            go('lose', { score: scoreLabel.value})
+        }
     })
+
+    player.on("headbutt", (obj) => {
+        if (obj.is('destructible')) {
+          destroy(obj)
+        }
+    })
+
+    player.collides('coin', (coin) => {
+        destroy(coin)
+        scoreLabel.value++
+        scoreLabel.text = scoreLabel.value
+    })
+
+    player.collides('baddie', (baddie) => {
+        if (isJumping) {
+          destroy(baddie)
+          player.jump(JUMP_FORCE / 2)
+        } else {
+          go('lose', { score: scoreLabel.value})
+        }
+    })
+
+    action('baddie', (baddie) => {
+        baddie.move(-BADDIE_SPEED, 0)
+      })
 
     keyDown('left', () => {
         player.move(-MOVE_SPEED, 0)
@@ -133,4 +169,8 @@ scene("game", () => {
 
 })
 
-go("game")
+scene('lose', ({ score }) => {
+    add([text(score, 32), origin('center'), pos(width()/2, height()/ 2)])
+  })
+
+go("game", {level: 0, score: 0})
