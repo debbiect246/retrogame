@@ -4,7 +4,7 @@ kaboom(
         fullscreen: true,
         scale: 2,
         debug: true,
-        clearColor: [0,0,5,1],
+        clearColor: [0,0,1,0.4],
     }
 );
 
@@ -27,8 +27,14 @@ loadSound("stomp", "sounds/stomp.wav");
 loadSound("time", "sounds/time-warning.wav");
 loadSound("clearworld", "sounds/world-clear.wav");
 
+loadSprite("blank", "sprites/blank-tile-original.png")
 loadSprite("brick", "sprites/brick.png")
 loadSprite("brownBrick", "sprites/brown-brick.png")
+loadSprite("coin", "sprites/ci-coin.png")
+loadSprite("code-scroll", "sprites/code-scroll.png")
+loadSprite("coffee", "sprites/coffee.png")
+loadSprite("github", "sprites/github.png")
+loadSprite("gold-code-scroll", "sprites/gold-code-scroll.png")
 loadSprite("greyBrick", "sprites/grey-brick.png")
 loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
     sliceX: 5,
@@ -39,8 +45,9 @@ loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
         },
     },
 })
-loadSprite("coin", "sprites/ci-coin.png")
-loadSprite("ground", "sprites/ground.png")
+loadSprite("ground", "sprites/ground2.png")
+loadSprite("imposter", "sprites/imposter.png")
+loadSprite("mystery-box", "sprites/mystery-box-original.png")
 loadSprite("pipeLeftBottom", "sprites/pipe-join-left-bottom.png")
 loadSprite("pipeLeftTop", "sprites/pipe-join-left-top.png")
 loadSprite("pipeLeft", "sprites/pipe-left.png")
@@ -48,7 +55,7 @@ loadSprite("pipeSideBottomEnd", "sprites/pipe-side-bottom-end.png")
 loadSprite("pipeSideBottom", "sprites/pipe-side-bottom.png")
 loadSprite("pipeSideTopEnd", "sprites/pipe-side-top-end.png")
 loadSprite("pipeSideTop", "sprites/pipe-side-top.png")
- loadSprite("pipeRight", "sprites/pipe-up-right.png")
+loadSprite("pipeRight", "sprites/pipe-up-right.png")
 loadSprite("pipeUpTopLeft", "sprites/pipe-up-top-left.png")
 loadSprite("pipeUpTopRight", "sprites/pipe-up-top-right.png")
 loadSprite("semi", "sprites/semi-colon-walking.png", {
@@ -60,7 +67,7 @@ loadSprite("semi", "sprites/semi-colon-walking.png", {
         },
     },
 })
-loadSprite("imposter", "sprites/imposter.png")
+
 loadSprite("stack", "sprites/stack-overflow.png")
 loadSprite("youtube", "sprites/youtube-coin.png")
 
@@ -102,9 +109,9 @@ scene("game", ({level, score}) => {
         '                                                                                            ',
         '                                                                                            ',
         '                                                                                            ',
+        '        m                                                                                   ',
         '                                                                                            ',
-        '                                                                                            ',
-        '                                                                                      12    ',
+        '               b  @  C  G  #                                                          12    ',
         '        12                    12                                                b     lr    ',
         '        lr          ;         lr                                                      lr    ',
         'gggggggggggggggggggggggggggggggg   gggggggggg   gggggggggggggg   g  g  ggggggggggggggggggggg',
@@ -113,11 +120,17 @@ scene("game", ({level, score}) => {
     const levelCfg = {
         width: 32,
         height: 32,
+        '-': [sprite('blank'), solid(), scale(0.75)],
         'b': [sprite('brick'), solid(), scale(0.75), 'destructible', 'wall'],
         'B': [sprite('brownBrick'), solid(), scale(0.75), 'destructible', 'wall'],
         'c': [sprite('coin'), scale(0.75), 'coin'],
+        '@': [sprite('code-scroll'), scale(0.75), 'code-scroll'],
+        'C': [sprite('coffee'), scale(0.75), 'coffee'],
+        'G': [sprite('github'), scale(0.75), 'github'],
+        '#': [sprite('gold-code-scroll'), scale(0.75), 'gold-code-scroll'],
         'g': [sprite('ground'), solid()],
         'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', {timer: 0}],
+        'm': [sprite('mystery-box'), solid(), 'mystery-box'],
         ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi'],
         's': [sprite('stack'), scale(1)],
         'l': [sprite('pipeLeft'), solid(), scale(1), 'wall'],
