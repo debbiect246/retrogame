@@ -167,12 +167,11 @@ scene("game", ({level, score}) => {
     
     player.action(() => {
         camPos(player.pos)
-        if (player.grounded() && !isMoving) {
-            player.play('idle')
+        if (player.grounded()) {
             isJumping = false
-        }
-        else if (player.grounded() && isMoving) {
-            player.play('run')
+            if (!isMoving) {
+                player.play('idle')
+            } 
         }
         if (player.pos.y > CERTAIN_DEATH/3) {
             camScale(4);
@@ -239,8 +238,11 @@ scene("game", ({level, score}) => {
 
     keyDown('left', () => {
         player.move(-MOVE_SPEED, 0)
-        isMoving = true
         player.scale = vec2(-1, 1)
+        if (!isMoving) {
+            player.play('run')
+            isMoving = true
+        }
     })
 
     keyRelease('left', () => {
@@ -249,8 +251,11 @@ scene("game", ({level, score}) => {
 
     keyDown('right', () => {
         player.move(MOVE_SPEED, 0)
-        isMoving = true
         player.scale = vec2(1, 1)
+        if (!isMoving) {
+            player.play('run')
+            isMoving = true
+        }
     })
 
     keyRelease('right', () => {
