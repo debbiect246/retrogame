@@ -8,15 +8,63 @@ kaboom(
     }
 );
 
-loadRoot('assets/sprites/')
+loadRoot('assets/')
 
-loadSprite("brick", "brick.png")
-loadSprite("coin", "ci-coin.png")
-loadSprite("ground", "ground.png")
-loadSprite("imposter", "imposter.png")
-loadSprite("stack", "stack-overflow.png")
-loadSprite("youtube", "youtube-coin.png")
-loadSprite("jim", "super-jim-32x32.png", {
+loadSound("break", "sounds/break-block.wav");
+loadSound("bump", "sounds/bump.wav");
+loadSound("coin", "sounds/coin.wav");
+loadSound("life", "sounds/extra-life.wav");
+loadSound("flag", "sounds/flagpole.wav");
+loadSound("gameover", "sounds/gameover.wav");
+loadSound("die", "sounds/hero-die.wav");
+loadSound("jump", "sounds/jump.wav");
+loadSound("clearlevel", "sounds/level-clear.wav");
+loadSound("pause", "sounds/pause.wav");
+loadSound("pipe", "sounds/pipe-travel.wav");
+loadSound("new", "sounds/powerup-appears.wav");
+loadSound("powerup", "sounds/powerup.wav");
+loadSound("stomp", "sounds/stomp.wav");
+loadSound("time", "sounds/time-warning.wav");
+loadSound("clearworld", "sounds/world-clear.wav");
+
+loadSprite("brick", "sprites/brick.png")
+loadSprite("brownBrick", "sprites/brown-brick.png")
+loadSprite("greyBrick", "sprites/grey-brick.png")
+loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
+    sliceX: 5,
+    anims: {
+        explode: {
+            from: 0,
+            to: 4,
+        },
+    },
+})
+loadSprite("coin", "sprites/ci-coin.png")
+loadSprite("ground", "sprites/ground.png")
+loadSprite("pipeLeftBottom", "sprites/pipe-join-left-bottom.png")
+loadSprite("pipeLeftTop", "sprites/pipe-join-left-top.png")
+loadSprite("pipeLeft", "sprites/pipe-left.png")
+loadSprite("pipeSideBottomEnd", "sprites/pipe-side-bottom-end.png")
+loadSprite("pipeSideBottom", "sprites/pipe-side-bottom.png")
+loadSprite("pipeSideTopEnd", "sprites/pipe-side-top-end.png")
+loadSprite("pipeSideTop", "sprites/pipe-side-top.png")
+loadSprite("pipeUpRight", "sprites/pipe-up-right.png")
+loadSprite("pipeUpTopLeft", "sprites/pipe-up-top-left.png")
+loadSprite("pipeUpTopRight", "sprites/pipe-up-top-right.png")
+loadSprite("semi", "sprites/semi-colon-walking.png", {
+    sliceX: 5,
+    anims: {
+        walk: {
+            from: 0,
+            to: 4,
+        },
+    },
+})
+loadSprite("imposter", "sprites/imposter.png")
+loadSprite("stack", "sprites/stack-overflow.png")
+loadSprite("youtube", "sprites/youtube-coin.png")
+
+loadSprite("jim", "sprites/super-jim-32x32.png", {
     sliceX: 20,
     anims: {
         idle: {
@@ -48,30 +96,32 @@ scene("game", ({level, score}) => {
     camIgnore(["bg", "ui"]);
 
     const map = [
-        '                                                  ',
-        '                                                  ',
-        '                                                  ',
-        '                                                  ',
-        '                                                  ',
-        '                                                  ',
-        '                  c                               ',
-        '                                                  ',
-        '                b                                 ',
-        '          b                   y                   ',
-        '                                                  ',
-        '                   i          i                   ',
-        'ggggggggggggggggggggggggggggggggggggggggggggggggggg',
+        '                                          c                                                        ',
+        '                                                                                                   ',
+        '                                           b                                                             ',
+        '                                                                                                                   ',
+        '                                                     b                                                          ',
+        '                                                                                                              ',
+        '                  c                              b       b                                                     ',
+        '                                              b                                                                    ',
+        '                b                                                                                    c                 ',
+        '    B      b                   y       b                                            c                           c    ',
+        '                                             b                         c                             b     c          ',
+        '                   i          i                      b           c    b      i          c  c                          ',
+        'ggggggggggggggggggggggggg   ggggggggggggggggggggggggg   gggggggggg    gggggggggggggg   g    g    ggggggggggggggggggggg',
     ]
 
     const levelCfg = {
         width: 20,
         height: 20,
         'b': [sprite('brick'), solid(), scale(0.75), 'destructible'],
+        'B': [sprite('brownBrick'), solid(), scale(0.75), 'destructible'],
         'c': [sprite('coin'), scale(0.75), 'coin'],
         'g': [sprite('ground'), solid(), scale(1)],
         'i': [sprite('imposter'), body(), scale(1), 'baddie'],
         's': [sprite('stack'), scale(1)],
         'y': [sprite('youtube'), scale(0.75)],
+        // TODO
     }
 
     const gameLevel = addLevel(map, levelCfg)
@@ -110,17 +160,20 @@ scene("game", ({level, score}) => {
             camScale(4);
         }
         if (player.pos.y >= CERTAIN_DEATH) {
+            play('die')
             go('lose', { score: scoreLabel.value})
         }
     })
 
     player.on("headbutt", (obj) => {
         if (obj.is('destructible')) {
-          destroy(obj)
+            play('break')
+            destroy(obj)
         }
     })
 
     player.collides('coin', (coin) => {
+        play('coin')
         destroy(coin)
         scoreLabel.value++
         scoreLabel.text = scoreLabel.value
@@ -128,10 +181,12 @@ scene("game", ({level, score}) => {
 
     player.collides('baddie', (baddie) => {
         if (isJumping) {
-          destroy(baddie)
-          player.jump(JUMP_FORCE / 2)
+            play('stomp')    
+            destroy(baddie)
+            player.jump(JUMP_FORCE / 2)
         } else {
-          go('lose', { score: scoreLabel.value})
+            play('die')
+            go('lose', { score: scoreLabel.value})
         }
     })
 
@@ -161,6 +216,7 @@ scene("game", ({level, score}) => {
 
     keyPress('space', () => {
         if (player.grounded()) {
+            play('jump')
             isJumping = true
             player.jump(JUMP_FORCE)
             player.play('jump')
