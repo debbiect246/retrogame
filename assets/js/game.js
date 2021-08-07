@@ -119,7 +119,7 @@ scene("game", ({level, score}) => {
         '                m   bmbmb                     12         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
         '                                      12      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
         '                            12        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     12              12 oooooooo                  ',
-        '                            lr        lr      lr         lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
+        '         ;                  lr        lr      lr         lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
         'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
         'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
         '                                                                                                                                                                                                                ',
@@ -133,8 +133,8 @@ scene("game", ({level, score}) => {
         '                                                z   ccccccc    l                                                                                                                                                ',
         '                                                z   ccccccc    l                                                                                                                                                ',
         '                                                z   zzzzzzz    l                                                                                                                                                ',
-        '                                                z   zzzzzzz  64l                                                                                                                                                ',
-        '                                                z   zzzzzzz  53l                                                                                                                                                ',
+        '                                                z   zzzzzzz  684                                                                                                                                                ',
+        '                                                z   zzzzzzz  573                                                                                                                                                ',
         '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
         '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
     ]
@@ -162,12 +162,12 @@ scene("game", ({level, score}) => {
         'r': [sprite('pipeRight'), solid(), scale(1), 'wall'],
         '1': [sprite('pipeUpTopLeft'), solid(), scale(1), 'next-level'],
         '2': [sprite('pipeUpTopRight'), solid(), scale(1), 'next-level'],
-        '3': [sprite('pipeLeftBottom'), solid(), scale(1.2)],
-        '4': [sprite('pipeLeftTop'), solid(), scale(1.2)],
+        '3': [sprite('pipeLeftBottom'), solid(), scale(1)],
+        '4': [sprite('pipeLeftTop'), solid(), scale(1)],
         '5': [sprite('pipeSideBottomEnd'), solid(), scale(1)],
         '6': [sprite('pipeSideTopEnd'), solid(), scale(1)],
-        // '7': [sprite('pipeSideBottom'), solid(), scale(1)],
-        // '8': [sprite('pipeSideTop'), solid(), scale(1)],
+        '7': [sprite('pipeSideBottom'), solid(), scale(1)],
+        '8': [sprite('pipeSideTop'), solid(), scale(1)],
     }
 
     const gameLevel = addLevel(map, levelCfg)
