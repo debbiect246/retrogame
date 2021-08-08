@@ -98,6 +98,7 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
         },
     },
 })
+loadSprite("title", "sprites/title.png")
 
 const WALK_SPEED = 120
 const RUN_SPEED = 180
@@ -120,9 +121,20 @@ let LIVES_REMAINING = 3
 let LINES_OF_CODE = 0
 scene("splash", () => {
     add([
-        text("Welcome to Super Jim 2021\n\nHit SPACEBAR to start!"),
+        sprite("title"),
         origin("center"),
-		pos(width() / 2, height() / 2),
+        pos(width() / 2, 220)
+    ])
+
+    add([
+        text("Help Jim rescue his Portfolio Project Six\n\n from the " + 
+        "minions of Imposter Syndrome\n\n and the pesky Semicolons.\n\n" + 
+        "\n\nTo earn a Distinction he will need to\n\n gather lines of code," + 
+        " peruse Stack Overflow,\n\n" + 
+        "check Slack and drink lots of coffee!\n\n\n\n" + 
+        "Hit SPACEBAR to start!"),
+        origin("center"),
+		pos(width() / 2, 480),
     ])
     keyPress("space", () => {
 		go("game", {level: 0, score: 0});
