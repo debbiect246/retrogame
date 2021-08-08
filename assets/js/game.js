@@ -70,7 +70,7 @@ loadSprite("semi", "sprites/semi-colon-walking.png", {
         },
     },
 })
-
+loadSprite("slack", "sprites/slack.png")
 loadSprite("stack", "sprites/stack-overflow.png")
 loadSprite("youtube", "sprites/youtube-coin.png")
 
@@ -125,7 +125,7 @@ scene("game", ({level, score}) => {
             '                                                                                                                                                                                           ooo                  ',
             '                                                                                                                                                                                          oooo                  ',
             '                                                                m                                                                                                                        ooooo                  ',
-            '                m   bmbmb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
+            '                M   bmbnb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
             '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
             '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                  ',
             '         ;                  lr        lr      lr         lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
@@ -153,10 +153,10 @@ scene("game", ({level, score}) => {
         width: 32,
         height: 32,
         '-': [sprite('blank'), solid(), scale(1)],
-        'b': [sprite('brick'), solid(), scale(1), 'destructible', 'wall'],
+        'b': [sprite('brick'), solid(), scale(1), 'destructible'],
         'B': [sprite('brownBrick'), solid(), scale(0.75), 'destructible', 'wall'],
         'z': [sprite('blueBrick'), solid(), scale(1), 'wall'],
-        'c': [sprite('coin'), scale(0.75), 'coin'],
+        'c': [sprite('coin'), scale(0.8), 'coin'],
         '@': [sprite('code-scroll'), scale(0.75), 'code-scroll'],
         'C': [sprite('coffee'), scale(0.75), 'coffee'],
         'G': [sprite('github'), scale(0.75), 'github'],
@@ -164,8 +164,11 @@ scene("game", ({level, score}) => {
         'g': [sprite('ground'), solid()],
         'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', {timer: 0}],
         'm': [sprite('mystery-box'), solid(), 'mystery-box'],
+        'M': [sprite('mystery-box'), solid(), 'mystery-box-coin'],
+        'n': [sprite('mystery-box'), solid(), 'mystery-box-slack'],
         ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi'],
         's': [sprite('stack'), scale(1)],
+        'S': [sprite('slack'), scale(1), 'slack', body(), scale(0.8), {dir: 1}, {timer: 0}],
         'o': [sprite('rubble'), solid()],
         'u': [sprite('rubble-blue'), solid()],
         'l': [sprite('pipeLeft'), solid(), scale(1), 'wall'],
@@ -228,7 +231,8 @@ scene("game", ({level, score}) => {
 
     const player = add([
         sprite('jim'),
-        pos(width() / 2, height() / 2),
+        // pos(width() / 2, height() / 2),
+        pos(60, 120),
         body(),
         scale(1.4),
         makeBig(),
@@ -264,6 +268,38 @@ scene("game", ({level, score}) => {
             gameLevel.spawn('-', obj.gridPos.sub(0,0))
             play('new')
         }
+
+        if (obj.is('mystery-box-coin')) {
+            gameLevel.spawn('c', obj.gridPos.sub(-0.1,1))
+            destroy(obj)
+            gameLevel.spawn('-', obj.gridPos.sub(0,0))
+            play('new')
+        }
+
+        if (obj.is('mystery-box-slack')) {
+            gameLevel.spawn('S', obj.gridPos.sub(0,2))
+            destroy(obj)
+            gameLevel.spawn('-', obj.gridPos.sub(0,0))
+            play('new')
+        }
+    })
+
+    action('slack', (slack) => {
+        slack.move(slack.dir * BADDIE_SPEED, 0)
+        //s.rotate(2)
+    })
+
+    collides('slack', 'wall', (slack) => {
+        // TODO: fix scale/tile causing baddies to get stuck on large tiles (e.g. pipes)
+        slack.dir =- slack.dir
+    })
+
+    player.collides('slack', (slack) => {
+        play('powerup')
+        destroy(slack)
+        scoreLabel.value += 100
+        scoreLabel.text = scoreLabel.value
+        // need to add power up effect discuss with Ed
     })
 
     player.collides('coffee', (coffee) => {
