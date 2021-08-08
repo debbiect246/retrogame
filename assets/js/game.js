@@ -12,20 +12,22 @@ loadRoot('assets/')
 
 loadSound("break", "sounds/break-block.wav");
 loadSound("bump", "sounds/bump.wav");
+loadSound("clearlevel", "sounds/level-clear.wav");
+loadSound("clearworld", "sounds/world-clear.wav");
+loadSound("code", "sounds/keyboard.wav");
 loadSound("coin", "sounds/coin.wav");
-loadSound("life", "sounds/extra-life.wav");
+loadSound("die", "sounds/hero-die.wav");
 loadSound("flag", "sounds/flagpole.wav");
 loadSound("gameover", "sounds/gameover.wav");
-loadSound("die", "sounds/hero-die.wav");
+loadSound("github", "sounds/github.wav");
+loadSound("life", "sounds/extra-life.wav");
 loadSound("jump", "sounds/jump.wav");
-loadSound("clearlevel", "sounds/level-clear.wav");
+loadSound("new", "sounds/powerup-appears.wav");
 loadSound("pause", "sounds/pause.wav");
 loadSound("pipe", "sounds/pipe-travel.wav");
-loadSound("new", "sounds/powerup-appears.wav");
 loadSound("powerup", "sounds/powerup.wav");
 loadSound("stomp", "sounds/stomp.wav");
 loadSound("time", "sounds/time-warning.wav");
-loadSound("clearworld", "sounds/world-clear.wav");
 
 loadSprite("blank", "sprites/blank-tile-original.png")
 loadSprite("brick", "sprites/brick.png")
@@ -116,7 +118,7 @@ let isMoving = false
 let isCrouching = false
 
 let LIVES_REMAINING = 3
-
+let LINES_OF_CODE = 0
 scene("splash", () => {
     add([
         text("Welcome to Super Jim 2021\n\nHit SPACEBAR to start!"),
@@ -143,8 +145,8 @@ scene("game", ({level, score}) => {
             '                                                                                                                                                                                           ooo                  ',
             '                                                                                                                                                                                          oooo                  ',
             '                                                                m                                                                                                                        ooooo        G         ',
-            '                M   bmbnb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
-            '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
+            '                M   bNbnb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
+            '                             G        ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
             '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                  ',
             '                            lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
             'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
@@ -160,7 +162,7 @@ scene("game", ({level, score}) => {
             '                                                                                                                                                                                           ooo                  ',
             '                                                                                                                                                                                          oooo                  ',
             '                                                                m                                                                                                                        ooooo        G         ',
-            '                M   bmbnb                     ()         ()                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
+            '                M   bNbnb                     ()         ()                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
             '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
             '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                12',
             '     ; ; ; ; ; ; ; ; ;      lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o       lr',
@@ -186,6 +188,7 @@ scene("game", ({level, score}) => {
         'm': [sprite('mystery-box'), solid(), 'mystery-box'],
         'M': [sprite('mystery-box'), solid(), 'mystery-box-coin'],
         'n': [sprite('mystery-box'), solid(), 'mystery-box-slack'],
+        'N': [sprite('mystery-box'), solid(), 'mystery-box-code'],
         ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi', scale(0.8)],
         's': [sprite('stack'), scale(1)],
         'S': [sprite('slack'), scale(1), 'slack', body(), scale(0.8), {dir: 1}, {timer: 0}],
@@ -224,6 +227,16 @@ scene("game", ({level, score}) => {
         layer('ui'),
         {
             value: LIVES_REMAINING,
+        }
+    ])
+
+    const codeLabel = add([
+        text('Uncommited Code: ' + LINES_OF_CODE),
+        pos(width()/2, 6),
+        origin('top'),
+        layer('ui'),
+        {
+            value: LINES_OF_CODE,
         }
     ])
 
@@ -321,6 +334,13 @@ scene("game", ({level, score}) => {
             gameLevel.spawn('-', obj.gridPos.sub(0,0))
             play('new')
         }
+
+        if (obj.is('mystery-box-code')) {
+            gameLevel.spawn('@', obj.gridPos.sub(0,2))
+            destroy(obj)
+            gameLevel.spawn('-', obj.gridPos.sub(0,0))
+            play('new')
+        }
     })
 
     action('slack', (slack) => {
@@ -359,6 +379,24 @@ scene("game", ({level, score}) => {
         scoreLabel.text = scoreLabel.value
     })
 
+    player.collides('code-scroll', (code) => {
+        play('code')
+        destroy(code)
+        LINES_OF_CODE += 10
+        codeLabel.text = 'Uncommited Code: ' + LINES_OF_CODE
+    })
+    
+    player.collides('github', (g) => {
+        play('github')
+        destroy(g)
+        scoreLabel.value += (LINES_OF_CODE * 100)
+        scoreLabel.text = scoreLabel.value
+        LINES_OF_CODE = 0
+        codeLabel.text = 'Uncommited Code: ' + LINES_OF_CODE
+    })
+
+    
+    
     player.collides('baddie', (baddie) => {
         if (player.falling()) {
             play('stomp')    
