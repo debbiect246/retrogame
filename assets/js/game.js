@@ -49,7 +49,6 @@ loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
         },
     },
 })
-loadSprite("ground", "sprites/ground2.png")
 loadSprite("rubble", "sprites/rubble-original.png")
 loadSprite("rubble-blue", "sprites/rubble-blue.png")
 loadSprite("rubble-red", "sprites/rubble-red.png")
@@ -183,7 +182,7 @@ scene("game", ({level, score}) => {
         'C': [sprite('coffee'), scale(0.75), 'coffee'],
         'G': [sprite('github'), scale(0.75), 'github'],
         '#': [sprite('gold-code-scroll'), scale(0.75), 'gold-code-scroll'],
-        'g': [sprite('ground'), solid()],
+        'g': [sprite('grass-rubble-original'), solid()],
         'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', {timer: 0}, scale(0.8)],
         'm': [sprite('mystery-box'), solid(), 'mystery-box'],
         'M': [sprite('mystery-box'), solid(), 'mystery-box-coin'],
