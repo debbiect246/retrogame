@@ -102,6 +102,9 @@ const JUMP_FORCE = 500
 const BIG_JUMP_FORCE = 600
 let CURRENT_JUMP_FORCE = JUMP_FORCE
 const CERTAIN_DEATH = 1500
+const PLAYER_SCALE_SMALL = 1
+const PLAYER_SCALE_BIG = 1.4
+let CURRENT_PLAYER_SCALE = PLAYER_SCALE_SMALL
 
 const BADDIE_SPEED = 60
 // const BADDIE_JUMP_FORCE = 300
@@ -109,6 +112,19 @@ const BADDIE_SPEED = 60
 let isJumping = true
 let isMoving = false
 let isCrouching = false
+
+let LIVES_REMAINING = 3
+
+scene("splash", () => {
+    add([
+        text("Welcome to Super Jim 2021\n\nHit SPACEBAR to start!"),
+        origin("center"),
+		pos(width() / 2, height() / 2),
+    ])
+    keyPress("space", () => {
+		go("game", {level: 0, score: 0});
+	});
+})
 
 scene("game", ({level, score}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
@@ -128,24 +144,9 @@ scene("game", ({level, score}) => {
             '                m   bmbmb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
             '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
             '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                  ',
-            '         ;                  lr        lr      lr         lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
+            '                            lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
             'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
             'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
-            '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                                ',
-            '                                                z   zzzzzzz    l                                                                                                                                                ',
-            '                                                z              l                                                                                                                                                ',
-            '                                                z              l                                                                                                                                                ',
-            '                                                z              l                                                                                                                                                ',
-            '                                                z              l                                                                                                                                                ',
-            '                                                z    ccccc     l                                                                                                                                                ',
-            '                                                z   ccccccc    l                                                                                                                                                ',
-            '                                                z   ccccccc    l                                                                                                                                                ',
-            '                                                z   zzzzzzz    l                                                                                                                                                ',
-            '                                                z   zzzzzzz  684                                                                                                                                                ',
-            '                                                z   zzzzzzz  573                                                                                                                                                ',
-            '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
-            '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
         ]
     ]
 
@@ -203,6 +204,7 @@ scene("game", ({level, score}) => {
             update() {
                 if (isBig) {
                     CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
+                    CURRENT_PLAYER_SCALE = PLAYER_SCALE_BIG
                     // timer -= dt()
                 // if (timer <= 0) {
                 //     this.shrink()
@@ -215,6 +217,7 @@ scene("game", ({level, score}) => {
             shrink() {
                 this.scale = vec2(1)
                 CURRENT_JUMP_FORCE = JUMP_FORCE
+                CURRENT_PLAYER_SCALE = PLAYER_SCALE_SMALL
                 // timer = 0
                 isBig = false
             },
@@ -228,15 +231,15 @@ scene("game", ({level, score}) => {
 
     const player = add([
         sprite('jim'),
-        pos(width() / 2, height() / 2),
+        pos(width() / 5, height() / 2),
         body(),
-        scale(1.4),
+        scale(PLAYER_SCALE_SMALL),
         makeBig(),
-        origin('bot'),
+        origin('center'),
     ])
     
     player.action(() => {
-        camPos(player.pos)
+        camPos(player.pos.x, height() / 2)
         if (player.grounded()) {
             isJumping = false
             if (!isMoving && !isCrouching) {
@@ -248,7 +251,8 @@ scene("game", ({level, score}) => {
         }
         if (player.pos.y >= CERTAIN_DEATH) {
             play('die')
-            go('lose', { score: scoreLabel.value})
+            LIVES_REMAINING -= 1
+            go('lose', { score: scoreLabel.value, level: level})
         }
     })   
 
@@ -300,10 +304,12 @@ scene("game", ({level, score}) => {
 
     player.overlaps('baddie', (baddie) => {
         if (player.isBig()) {
+            // play('bump')
             player.shrink()
         } else {
             play('die')
-            go('lose', { score: scoreLabel.value})
+            LIVES_REMAINING -= 1
+            go('lose', { score: scoreLabel.value, level: level})
         }
     })
 
@@ -327,7 +333,7 @@ scene("game", ({level, score}) => {
         } else {
             player.move(-WALK_SPEED, 0)
         }
-        player.scale.x = -1
+        player.scale.x = -CURRENT_PLAYER_SCALE
         if (!isMoving) {
             player.play('run')
             isMoving = true
@@ -344,7 +350,7 @@ scene("game", ({level, score}) => {
         } else {
             player.move(WALK_SPEED, 0)
         }
-        player.scale.x = 1
+        player.scale.x = CURRENT_PLAYER_SCALE
         if (!isMoving) {
             player.play('run')
             isMoving = true
@@ -379,8 +385,11 @@ scene("game", ({level, score}) => {
 
 })
 
-scene('lose', ({ score }) => {
-    add([text(score, 32), origin('center'), pos(width()/2, height()/ 2)])
+scene('lose', ({ score, level }) => {
+    add([text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), origin('left'), pos(width()/2, height()/ 2)])
+    keyPress("space", () => {
+		go("game", {level: level, score: score});
+	});
 })
 
-go("game", {level: 0, score: 0})
+go("splash")
