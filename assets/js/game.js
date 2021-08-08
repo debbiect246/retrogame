@@ -85,36 +85,56 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
         jump: {
             from: 6,
             to: 6,
-        }
+        },
+        crouch: {
+            from: 1,
+            to: 1,
+        },
     },
 })
 
-const MOVE_SPEED = 120
-const PLAYER_JUMP_FORCE = 520
+const WALK_SPEED = 120
+const RUN_SPEED = 180
+const JUMP_FORCE = 450
+const BIG_JUMP_FORCE = 550
+let CURRENT_JUMP_FORCE = JUMP_FORCE
 const CERTAIN_DEATH = 1500
 
 const BADDIE_SPEED = 60
-const BADDIE_JUMP_FORCE = 300
+// const BADDIE_JUMP_FORCE = 300
  
 let isJumping = true
 let isMoving = false
+let isCrouching = false
 
 scene("game", ({level, score}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
     camIgnore(["bg", "ui"]);
 
-    const map = [
-        '                                                                                            ',
-        '                                                                                            ',
-        '                                                                                            ',
-        '                                                                                            ',
-        '                                                                                            ',
-        '        m                                                                                   ',
-        '                                                                                            ',
-        '               b  @  C  G  #                                                          12    ',
-        '        12                    12                                                b     lr    ',
-        '        lr          ;         lr                                                      lr    ',
-        'gggggggggggggggggggggggggggggggg   gggggggggg   gggggggggggggg   g  g  ggggggggggggggggggggg',
+    const maps = [
+        [
+            '                                                                                            ',
+            '                                                                                            ',
+            '        m                                                                                   ',
+            '                                                                                            ',
+            '               b  @  C  G  #                                                          12    ',
+            '        ()                    ()                                                b     lr    ',
+            '        lr          ;         lr                                                      lr    ',
+            'gggggggggggggggggggggggggggggggg   gggggggggg   gggggggggggggg   g  g  ggggggggggggggggggggg',
+        ],
+        [
+            '                                                                                            ',
+            '                                                                                            ',
+            '                                                                                            ',
+            '                                                                                            ',
+            '                                                                                            ',
+            '        m                                                                                   ',
+            '                                                                                            ',
+            '               b  @  C  G  #                                                          12    ',
+            '        ()                    ()                                                b     lr    ',
+            '        lr          ;         lr                                                      lr    ',
+            'gggggggggggggggggggggggggggggggg   gggggggggg   gggggggggggggg   g  g  ggggggggggggggggggggg',
+        ],
     ]
 
     const levelCfg = {
@@ -135,8 +155,10 @@ scene("game", ({level, score}) => {
         's': [sprite('stack'), scale(1)],
         'l': [sprite('pipeLeft'), solid(), scale(1), 'wall'],
         'r': [sprite('pipeRight'), solid(), scale(1), 'wall'],
-        '1': [sprite('pipeUpTopLeft'), solid(), scale(1), 'next-level'],
-        '2': [sprite('pipeUpTopRight'), solid(), scale(1), 'next-level'],
+        '(': [sprite('pipeUpTopLeft'), solid(), scale(1), 'wall'],
+        ')': [sprite('pipeUpTopRight'), solid(), scale(1), 'wall'],
+        '1': [sprite('pipeUpTopLeft'), solid(), scale(1), 'pipe'],
+        '2': [sprite('pipeUpTopRight'), solid(), scale(1), 'pipe'],
         // '1': [sprite('pipeLeftBottom'), solid(), scale(1)],
         // '2': [sprite('pipeLeftTop'), solid(), scale(1)],
         // '4': [sprite('pipeSideBottomEnd'), solid(), scale(1)],
@@ -145,7 +167,7 @@ scene("game", ({level, score}) => {
         // '7': [sprite('pipeSideTop'), solid(), scale(1)],
     }
 
-    const gameLevel = addLevel(map, levelCfg)
+    const gameLevel = addLevel(maps[level], levelCfg)
 
     const scoreLabel = add([
         text(score),
@@ -156,12 +178,44 @@ scene("game", ({level, score}) => {
         }
     ])
 
-    add([text('level ' + 'test', pos(4, 6))])
+    add([text('level ' + parseInt(level + 1) ), pos(40, 6)])
+
+    function makeBig() {
+        // let timer = 0
+        let isBig = false
+        return {
+            update() {
+                if (isBig) {
+                    CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
+                    // timer -= dt()
+                // if (timer <= 0) {
+                //     this.shrink()
+                // }
+                }
+            },
+            isBig() {
+                return isBig
+            },
+            shrink() {
+                this.scale = vec2(1)
+                CURRENT_JUMP_FORCE = JUMP_FORCE
+                // timer = 0
+                isBig = false
+            },
+            grow() {
+                this.scale = vec2(1.2)
+                // timer = time
+                isBig = true     
+            }
+        }
+    }
 
     const player = add([
         sprite('jim'),
-        pos(30, 0),
+        pos(width() / 2, height() / 2),
         body(),
+        scale(1),
+        makeBig(),
         origin('bot'),
     ])
     
@@ -169,7 +223,7 @@ scene("game", ({level, score}) => {
         camPos(player.pos)
         if (player.grounded()) {
             isJumping = false
-            if (!isMoving) {
+            if (!isMoving && !isCrouching) {
                 player.play('idle')
             } 
         }
@@ -180,10 +234,10 @@ scene("game", ({level, score}) => {
             play('die')
             go('lose', { score: scoreLabel.value})
         }
-    })
+    })   
 
     player.on("headbutt", (obj) => {
-        if (obj.is('destructible')) {
+        if (obj.is('destructible') && player.isBig()) {
             play('break')
             destroy(obj)
         }
@@ -201,6 +255,7 @@ scene("game", ({level, score}) => {
         destroy(coffee)
         scoreLabel.value += 10
         scoreLabel.text = scoreLabel.value
+        player.grow()
     })
 
     player.collides('coin', (coin) => {
@@ -211,16 +266,29 @@ scene("game", ({level, score}) => {
     })
 
     player.collides('baddie', (baddie) => {
-        if (isJumping) {
+        if (player.falling()) {
             play('stomp')    
             destroy(baddie)
-            player.jump(PLAYER_JUMP_FORCE / 2)
+            player.jump(JUMP_FORCE / 2)
         }
     })
+    
+    player.collides('pipe', () => {
+        keyPress('down', () => {
+            go('game', {
+                level: (level + 1) % maps.length,
+                score: scoreLabel.value
+            })
+        })
+    })
 
-    player.overlaps('baddie', () => {
-        play('die')
-        go('lose', { score: scoreLabel.value})
+    player.overlaps('baddie', (baddie) => {
+        if (player.isBig()) {
+            player.shrink()
+        } else {
+            play('die')
+            go('lose', { score: scoreLabel.value})
+        }
     })
 
     action('baddie', (baddie) => {
@@ -233,12 +301,17 @@ scene("game", ({level, score}) => {
     })
 
     collides('baddie', 'wall', (baddie) => {
+        // TODO: fix scale/tile causing baddies to get stuck on large tiles (e.g. pipes)
         baddie.dir =- baddie.dir
     })
 
     keyDown('left', () => {
-        player.move(-MOVE_SPEED, 0)
-        player.scale = vec2(-1, 1)
+        if (keyIsDown('shift')) {
+            player.move(-RUN_SPEED, 0)
+        } else {
+            player.move(-WALK_SPEED, 0)
+        }
+        player.scale.x = -1
         if (!isMoving) {
             player.play('run')
             isMoving = true
@@ -250,8 +323,12 @@ scene("game", ({level, score}) => {
     })
 
     keyDown('right', () => {
-        player.move(MOVE_SPEED, 0)
-        player.scale = vec2(1, 1)
+        if (keyIsDown('shift')) {
+            player.move(RUN_SPEED, 0)
+        } else {
+            player.move(WALK_SPEED, 0)
+        }
+        player.scale.x = 1
         if (!isMoving) {
             player.play('run')
             isMoving = true
@@ -261,13 +338,26 @@ scene("game", ({level, score}) => {
     keyRelease('right', () => {
         isMoving = false
     })
+    
+    keyDown('down', () => {
+        if (!isMoving) {
+            player.play('crouch')
+            isCrouching = true
+        }
+    })
+
+    keyRelease('down', () => {
+        isCrouching = false
+    })
 
     keyPress('space', () => {
         if (player.grounded()) {
             play('jump')
-            isJumping = true
-            player.jump(PLAYER_JUMP_FORCE)
-            player.play('jump')
+            player.jump(JUMP_FORCE)
+            if (!isMoving) {
+                player.play('jump')
+                isJumping = true
+            }
         }
     })
 
@@ -275,6 +365,6 @@ scene("game", ({level, score}) => {
 
 scene('lose', ({ score }) => {
     add([text(score, 32), origin('center'), pos(width()/2, height()/ 2)])
-  })
+})
 
 go("game", {level: 0, score: 0})
