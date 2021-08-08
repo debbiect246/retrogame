@@ -30,6 +30,7 @@ loadSound("clearworld", "sounds/world-clear.wav");
 loadSprite("blank", "sprites/blank-tile-original.png")
 loadSprite("brick", "sprites/brick.png")
 loadSprite("brownBrick", "sprites/brown-brick.png")
+loadSprite("blueBrick", "sprites/brick-blue.png")
 loadSprite("coin", "sprites/ci-coin.png")
 loadSprite("code-scroll", "sprites/code-scroll.png")
 loadSprite("coffee", "sprites/coffee.png")
@@ -46,6 +47,8 @@ loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
     },
 })
 loadSprite("ground", "sprites/ground2.png")
+loadSprite("rubble", "sprites/rubble-red.png")
+loadSprite("rubble-blue", "sprites/rubble-blue.png")
 loadSprite("imposter", "sprites/imposter.png")
 loadSprite("mystery-box", "sprites/mystery-box-original.png")
 loadSprite("pipeLeftBottom", "sprites/pipe-join-left-bottom.png")
@@ -111,38 +114,46 @@ scene("game", ({level, score}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
     camIgnore(["bg", "ui"]);
 
-    const maps = [
-        [
-            '                                                                                            ',
-            '                                                                                            ',
-            '        m                                                                                   ',
-            '                                                                                            ',
-            '               b  @  C  G  #                                                          12    ',
-            '        ()                    ()                                                b     lr    ',
-            '        lr          ;         lr                                                      lr    ',
-            'gggggggggggggggggggggggggggggggg   gggggggggg   gggggggggggggg   g  g  ggggggggggggggggggggg',
-        ],
-        [
-            '                                                                                            ',
-            '                                                                                            ',
-            '                                                                                            ',
-            '                                                                                            ',
-            '                                                                                            ',
-            '        m                                                                                   ',
-            '                                                                                            ',
-            '               b  @  C  G  #                                                          12    ',
-            '        ()                    ()                                                b     lr    ',
-            '        lr          ;         lr                                                      lr    ',
-            'gggggggggggggggggggggggggggggggg   gggggggggg   gggggggggggggg   g  g  ggggggggggggggggggggg',
-        ],
+    const map = [
+        '                                                                                                                                                                                                                ',                
+        '                                                                                                                                                                                                                ',
+        '                                                                                                                                                                                                                ',
+        '                                                                                                                                                                                                      G         ',
+        '                                                                                                                                                                                                                ',
+        '                      m                                                         bbbbbbbb   bbbm              m           bbb    bmmb                                                        oo                  ',
+        '                                                                                                                                                                                           ooo                  ',
+        '                                                                                                                                                                                          oooo                  ',
+        '                                                                m                                                                                                                        ooooo                  ',
+        '                m   bmbmb                     12         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
+        '                                      12      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
+        '                            12        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     12              12 oooooooo                  ',
+        '         ;                  lr        lr      lr         lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
+        'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+        'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+        '                                                                                                                                                                                                                ',
+        '                                                                                                                                                                                                                ',
+        '                                                z   zzzzzzz    l                                                                                                                                                ',
+        '                                                z              l                                                                                                                                                ',
+        '                                                z              l                                                                                                                                                ',
+        '                                                z              l                                                                                                                                                ',
+        '                                                z              l                                                                                                                                                ',
+        '                                                z    ccccc     l                                                                                                                                                ',
+        '                                                z   ccccccc    l                                                                                                                                                ',
+        '                                                z   ccccccc    l                                                                                                                                                ',
+        '                                                z   zzzzzzz    l                                                                                                                                                ',
+        '                                                z   zzzzzzz  684                                                                                                                                                ',
+        '                                                z   zzzzzzz  573                                                                                                                                                ',
+        '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
+        '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
     ]
 
     const levelCfg = {
         width: 32,
         height: 32,
         '-': [sprite('blank'), solid(), scale(1)],
-        'b': [sprite('brick'), solid(), scale(0.75), 'destructible', 'wall'],
+        'b': [sprite('brick'), solid(), scale(1), 'destructible', 'wall'],
         'B': [sprite('brownBrick'), solid(), scale(0.75), 'destructible', 'wall'],
+        'z': [sprite('blueBrick'), solid(), scale(1), 'wall'],
         'c': [sprite('coin'), scale(0.75), 'coin'],
         '@': [sprite('code-scroll'), scale(0.75), 'code-scroll'],
         'C': [sprite('coffee'), scale(0.75), 'coffee'],
@@ -153,18 +164,19 @@ scene("game", ({level, score}) => {
         'm': [sprite('mystery-box'), solid(), 'mystery-box'],
         ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi'],
         's': [sprite('stack'), scale(1)],
+        'o': [sprite('rubble'), solid()],
+        'u': [sprite('rubble-blue'), solid()],
         'l': [sprite('pipeLeft'), solid(), scale(1), 'wall'],
         'r': [sprite('pipeRight'), solid(), scale(1), 'wall'],
-        '(': [sprite('pipeUpTopLeft'), solid(), scale(1), 'wall'],
-        ')': [sprite('pipeUpTopRight'), solid(), scale(1), 'wall'],
-        '1': [sprite('pipeUpTopLeft'), solid(), scale(1), 'pipe'],
-        '2': [sprite('pipeUpTopRight'), solid(), scale(1), 'pipe'],
-        // '1': [sprite('pipeLeftBottom'), solid(), scale(1)],
-        // '2': [sprite('pipeLeftTop'), solid(), scale(1)],
-        // '4': [sprite('pipeSideBottomEnd'), solid(), scale(1)],
-        // '5': [sprite('pipeSideBottom'), solid(), scale(1)],
-        // '6': [sprite('pipeSideTopEnd'), solid(), scale(1)],
-        // '7': [sprite('pipeSideTop'), solid(), scale(1)],
+
+        '1': [sprite('pipeUpTopLeft'), solid(), scale(1), 'next-level'],
+        '2': [sprite('pipeUpTopRight'), solid(), scale(1), 'next-level'],
+        '3': [sprite('pipeLeftBottom'), solid(), scale(1)],
+        '4': [sprite('pipeLeftTop'), solid(), scale(1)],
+        '5': [sprite('pipeSideBottomEnd'), solid(), scale(1)],
+        '6': [sprite('pipeSideTopEnd'), solid(), scale(1)],
+        '7': [sprite('pipeSideBottom'), solid(), scale(1)],
+        '8': [sprite('pipeSideTop'), solid(), scale(1)],
     }
 
     const gameLevel = addLevel(maps[level], levelCfg)
