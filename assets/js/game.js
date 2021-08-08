@@ -48,7 +48,7 @@ loadSprite("pipeSideBottomEnd", "sprites/pipe-side-bottom-end.png")
 loadSprite("pipeSideBottom", "sprites/pipe-side-bottom.png")
 loadSprite("pipeSideTopEnd", "sprites/pipe-side-top-end.png")
 loadSprite("pipeSideTop", "sprites/pipe-side-top.png")
- loadSprite("pipeRight", "sprites/pipe-up-right.png")
+loadSprite("pipeRight", "sprites/pipe-up-right.png")
 loadSprite("pipeUpTopLeft", "sprites/pipe-up-top-left.png")
 loadSprite("pipeUpTopRight", "sprites/pipe-up-top-right.png")
 loadSprite("semi", "sprites/semi-colon-walking.png", {
