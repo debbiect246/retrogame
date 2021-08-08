@@ -36,6 +36,7 @@ loadSprite("code-scroll", "sprites/code-scroll.png")
 loadSprite("coffee", "sprites/coffee.png")
 loadSprite("github", "sprites/github.png")
 loadSprite("gold-code-scroll", "sprites/gold-code-scroll.png")
+loadSprite("grass-rubble-original", "sprites/grass-rubble-original.png")
 loadSprite("greyBrick", "sprites/grey-brick.png")
 loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
     sliceX: 5,
@@ -47,8 +48,9 @@ loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
     },
 })
 loadSprite("ground", "sprites/ground2.png")
-loadSprite("rubble", "sprites/rubble-red.png")
+loadSprite("rubble", "sprites/rubble-original.png")
 loadSprite("rubble-blue", "sprites/rubble-blue.png")
+loadSprite("rubble-red", "sprites/rubble-red.png")
 loadSprite("imposter", "sprites/imposter.png")
 loadSprite("mystery-box", "sprites/mystery-box-original.png")
 loadSprite("pipeLeftBottom", "sprites/pipe-join-left-bottom.png")
@@ -180,11 +182,11 @@ scene("game", ({level, score}) => {
         'G': [sprite('github'), scale(0.75), 'github'],
         '#': [sprite('gold-code-scroll'), scale(0.75), 'gold-code-scroll'],
         'g': [sprite('ground'), solid()],
-        'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', {timer: 0}],
+        'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', {timer: 0}, scale(0.8)],
         'm': [sprite('mystery-box'), solid(), 'mystery-box'],
         'M': [sprite('mystery-box'), solid(), 'mystery-box-coin'],
         'n': [sprite('mystery-box'), solid(), 'mystery-box-slack'],
-        ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi'],
+        ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi', scale(0.8)],
         's': [sprite('stack'), scale(1)],
         'S': [sprite('slack'), scale(1), 'slack', body(), scale(0.8), {dir: 1}, {timer: 0}],
         'o': [sprite('rubble'), solid()],
