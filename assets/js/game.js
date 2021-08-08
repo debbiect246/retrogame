@@ -135,16 +135,33 @@ scene("game", ({level, score}) => {
             '                                                                                                                                                                                                                ',                
             '                                                                                                                                                                                                                ',
             '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                      G         ',
+            '                                                                                                                                                                                                                ',
             '                                                                                                                                                                                                                ',
             '                      m                                                         bbbbbbbb   bbbm              m           bbb    bmmb                                                        oo                  ',
             '                                                                                                                                                                                           ooo                  ',
             '                                                                                                                                                                                          oooo                  ',
-            '                                                                m                                                                                                                        ooooo                  ',
+            '                                                                m                                                                                                                        ooooo        G         ',
             '                M   bmbnb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
             '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
             '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                  ',
             '                            lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
+            'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+            'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+        ],
+        [
+            '                                                                                                                                                                                                                ',                
+            '                                                                                                                                                                                                                ',
+            '                                                                                                                                                                                                                ',
+            '                                                                                                                                                                                                                ',
+            '                                                                                                                                                                                                                ',
+            '                      m                                                         bbbbbbbb   bbbm              m           bbb    bmmb                                                        oo                  ',
+            '                                                                                                                                                                                           ooo                  ',
+            '                                                                                                                                                                                          oooo                  ',
+            '                                                                m                                                                                                                        ooooo        G         ',
+            '                M   bmbnb                     ()         ()                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
+            '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
+            '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                12',
+            '     ; ; ; ; ; ; ; ; ;      lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o       lr',
             'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
             'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
         ]
@@ -190,7 +207,7 @@ scene("game", ({level, score}) => {
     const gameLevel = addLevel(maps[level], levelCfg)
 
     const scoreLabel = add([
-        text(score),
+        text('Score: '+ score),
         pos(30, 6),
         layer('ui'),
         {
@@ -198,7 +215,17 @@ scene("game", ({level, score}) => {
         }
     ])
 
-    add([text('level ' + parseInt(level + 1) ), pos(40, 6)])
+    const livesLabel = add([
+        text('Lives Remaining: ' + LIVES_REMAINING),
+        pos(width()-30, 6),
+        origin('topright'),
+        layer('ui'),
+        {
+            value: LIVES_REMAINING,
+        }
+    ])
+
+    add([text('level ' + parseInt(level + 1) ), pos(40, 32)])
 
     function makeBig() {
         // let timer = 0
@@ -254,11 +281,13 @@ scene("game", ({level, score}) => {
             camScale(4);
         }
         if (player.pos.y >= CERTAIN_DEATH) {
-            play('die')
+            
             LIVES_REMAINING -= 1
             if (LIVES_REMAINING > 0) {
+                play('die')
                 go('lose', { score: scoreLabel.value, level: level})
             } else {
+                play('gameover')
                 go('gameover', {score: scoreLabel.value})
             }
         }
@@ -303,11 +332,14 @@ scene("game", ({level, score}) => {
     })
 
     player.collides('slack', (slack) => {
-        play('powerup')
+        play('life')
         destroy(slack)
         scoreLabel.value += 100
         scoreLabel.text = scoreLabel.value
         // need to add power up effect discuss with Ed
+        LIVES_REMAINING += 1
+        livesLabel.value = LIVES_REMAINING
+        livesLabel.text = 'Lives Remaining: ' + LIVES_REMAINING
     })
 
     player.collides('coffee', (coffee) => {
@@ -347,11 +379,13 @@ scene("game", ({level, score}) => {
             // play('bump')
             player.shrink()
         } else {
-            play('die')
+            
             LIVES_REMAINING -= 1
             if (LIVES_REMAINING > 0) {
+                play('die')
                 go('lose', { score: scoreLabel.value, level: level})
             } else {
+                play('gameover')
                 go('gameover', {score: scoreLabel.value})
             }
         }
@@ -437,8 +471,7 @@ scene('lose', ({ score, level }) => {
 })
 
 scene('gameover', ({score}) => {
-    
-    
+        
     add([
         sprite("jim-head"),
         pos(40,40),
@@ -447,25 +480,29 @@ scene('gameover', ({score}) => {
 
     add([
         text('Game Over'),
-        pos((width()/2)-272, (height()/2)-64),
+        pos((width()/2), (height()/2)),
+        origin('center'),
         scale(4)
     ])
     
     add([
         text('You let Jim down!'),
-        pos((width()/2)-128, (height()/2)+64),
+        pos(width()/2, (height()/2)+64),
+        origin('center'),
         scale(2)
     ])
 
     add([
         text('Your score: ' + score),
-        pos((width()/2)-128, (height()/2)+128),
+        pos((width()/2), (height()/2)+128),
+        origin('center'),
         scale(2)
     ])
 
     add([
         text('Hit space to try again'),
-        pos((width()/2)-128, (height()/2)+192),
+        pos((width()/2), (height()/2)+192),
+        origin('center'),
         scale(2)
     ])
 
