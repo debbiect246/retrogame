@@ -99,7 +99,7 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
 
 const WALK_SPEED = 120
 const RUN_SPEED = 180
-const JUMP_FORCE = 500
+const JUMP_FORCE = 400
 const BIG_JUMP_FORCE = 600
 let CURRENT_JUMP_FORCE = JUMP_FORCE
 const CERTAIN_DEATH = 1500
@@ -454,7 +454,7 @@ scene("game", ({level, score}) => {
     keyPress('space', () => {
         if (player.grounded()) {
             play('jump')
-            player.jump(JUMP_FORCE)
+            player.jump(CURRENT_JUMP_FORCE)
             if (!isMoving) {
                 player.play('jump')
                 isJumping = true
@@ -479,12 +479,15 @@ scene('gameover', ({score}) => {
         scale(2)
     ])
 
-    add([
+    const gameOver = add([
         text('Game Over'),
         pos((width()/2), (height()/2)),
-        origin('center'),
-        scale(4)
+        origin('center')
     ])
+
+    gameOver.action(() => {
+        gameOver.scale = Math.sin(time()) * 5;
+	});
     
     add([
         text('You let Jim down!'),
