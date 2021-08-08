@@ -46,24 +46,16 @@ this project my templates are all written in HTML. There is a template for addin
 
 * [CSS](https://www.w3schools.com/Css/) stands for Cascading Style sheets which is a type of style language which sets out how the webpage should be styled. It allows the user to style the webpage in a particular way, making the UX richer and more meaningful for the user.
 
-* [jquery](https://jquery.com/) is used to simplify DOM manipulation. Jquery is a javascript library that is used to provide interactivity 
-on websites. The $ sign signals to the browser that jquery is being used.
-
 * [kaboom.js](https://kaboomjs.com/) is a javascript library for building games.
 
-* We used [Chrome Developer Tools](https://developers.google.com/web/tools/chrome-devtools/) to work on my code. Chrome dev tools are a set of tools designed to give the developer tools to amend code in a testing environment in order to enhance the UX and functionality experience. 
+* We used [Chrome Developer Tools](https://developers.google.com/web/tools/chrome-devtools/) to work on the code. Chrome dev tools are a set of tools designed to give the developer tools to amend code in a testing environment in order to enhance the UX and functionality experience. 
 
 * We used [vscode](https://code.visualstudio.com/) and gitpod [gitpod](https://www.gitpod.io/) as our coding editors.  Lots of extensions  ere available to check the syntax of the code.
 
 
 ## Testing
 
-Testing was carried out by human beings.
-
-* Manual Testing
-
-We tested each part of our user story to check it worked as expected.
-
+Testing was carried out by human beings.  As each part of the game was being developed it was tested on screen checking that it worked and after it had been committed to the repo it was again tested by the person doing the commit to ensure that it worked as intended.
 
 
 ## Deployment
@@ -80,25 +72,27 @@ We all worked in different ways but overall the process used by collaborators wa
 4. Team coding sessions were done so that those people working on different parts of functionality for the game were able to ask further questions and get support in live time.
 5.  A project board was created in github and team members were able to select cards to work on.  Matt spent some time on designing wireframes and assets for the game, Ed and Monica spent some time on the assets and scenes for the game and Debbie spent time setting up the repo, reviewing and merging some pull requests - other people could also do this for other team member's code.  Debbie also spent time updating the readme at regular intervals and coding the instruction screen and leaderboard.
 6. Testing was done at regular intervals and the game reviewed during group discussions each day, usually starting around 8pm and going forward into the evening.
+7.  We all had to learn kaboom js at the start as this was a new javascript library for all of us and then we went on to use it to generate ideas for the game and to create the relevant sprites, scenes and level.  Matt created the wireframes for everyone to work from.
+8.  Once we had started on the initial process of creating the game, Debbie worked on the readme, keeping it up to date and monitoring the commits that were taking place as well as updating the hackathon app with details of the games' live link and github link.
 
 
   
 ## Future improvements
 
  1. Add further levels to the game.
- 2. Super Jim also could have to collect useful videos etc on his journey to get his projects done which would add to his point score.
+ 2. Add a leaderboard to the game so users can compare their scores with other users.
  3. Countdown timer could be added to the game.
  
 
 ## Credits
 
+The [You tube video](https://youtu.be/4OaHB0JbJDI) we all used to get up to speed with using kaboom.js was produced by free code camp.
 
 
 ### Media  
 
-Matt used [this colour palette](https://lospec.com/palette-list/endesga-64) for the design for the game.
+Matt used [this colour palette from lospec.com](https://lospec.com/palette-list/endesga-64) for the design for the game.
+Matt and  Ed used images from [the mushroomkingdom.net](https://themushroomkingdom.net/media/smb/wav) which were modified to create the character and objects used in the game.
 
-Matt and  Ed used images from [this website](https://themushroomkingdom.net/media/smb/wav) which were modified to create the character and objects used in the game.
 
 
-### Borrowed Code 
