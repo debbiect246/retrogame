@@ -2,7 +2,7 @@ kaboom(
     {
         global: true,
         fullscreen: true,
-        scale: 2,
+        scale: 1,
         debug: true,
         clearColor: [0,0,1,0.4],
     }
@@ -98,8 +98,8 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
 
 const WALK_SPEED = 120
 const RUN_SPEED = 180
-const JUMP_FORCE = 450
-const BIG_JUMP_FORCE = 550
+const JUMP_FORCE = 500
+const BIG_JUMP_FORCE = 600
 let CURRENT_JUMP_FORCE = JUMP_FORCE
 const CERTAIN_DEATH = 1500
 
@@ -114,37 +114,39 @@ scene("game", ({level, score}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
     camIgnore(["bg", "ui"]);
 
-    const map = [
-        '                                                                                                                                                                                                                ',                
-        '                                                                                                                                                                                                                ',
-        '                                                                                                                                                                                                                ',
-        '                                                                                                                                                                                                      G         ',
-        '                                                                                                                                                                                                                ',
-        '                      m                                                         bbbbbbbb   bbbm              m           bbb    bmmb                                                        oo                  ',
-        '                                                                                                                                                                                           ooo                  ',
-        '                                                                                                                                                                                          oooo                  ',
-        '                                                                m                                                                                                                        ooooo                  ',
-        '                m   bmbmb                     12         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
-        '                                      12      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
-        '                            12        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     12              12 oooooooo                  ',
-        '         ;                  lr        lr      lr         lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
-        'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
-        'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
-        '                                                                                                                                                                                                                ',
-        '                                                                                                                                                                                                                ',
-        '                                                z   zzzzzzz    l                                                                                                                                                ',
-        '                                                z              l                                                                                                                                                ',
-        '                                                z              l                                                                                                                                                ',
-        '                                                z              l                                                                                                                                                ',
-        '                                                z              l                                                                                                                                                ',
-        '                                                z    ccccc     l                                                                                                                                                ',
-        '                                                z   ccccccc    l                                                                                                                                                ',
-        '                                                z   ccccccc    l                                                                                                                                                ',
-        '                                                z   zzzzzzz    l                                                                                                                                                ',
-        '                                                z   zzzzzzz  684                                                                                                                                                ',
-        '                                                z   zzzzzzz  573                                                                                                                                                ',
-        '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
-        '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
+    const maps = [
+        [
+            '                                                                                                                                                                                                                ',                
+            '                                                                                                                                                                                                                ',
+            '                                                                                                                                                                                                                ',
+            '                                                                                                                                                                                                      G         ',
+            '                                                                                                                                                                                                                ',
+            '                      m                                                         bbbbbbbb   bbbm              m           bbb    bmmb                                                        oo                  ',
+            '                                                                                                                                                                                           ooo                  ',
+            '                                                                                                                                                                                          oooo                  ',
+            '                                                                m                                                                                                                        ooooo                  ',
+            '                m   bmbmb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
+            '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
+            '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                  ',
+            '         ;                  lr        lr      lr         lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
+            'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+            'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+            '                                                                                                                                                                                                                ',
+            '                                                                                                                                                                                                                ',
+            '                                                z   zzzzzzz    l                                                                                                                                                ',
+            '                                                z              l                                                                                                                                                ',
+            '                                                z              l                                                                                                                                                ',
+            '                                                z              l                                                                                                                                                ',
+            '                                                z              l                                                                                                                                                ',
+            '                                                z    ccccc     l                                                                                                                                                ',
+            '                                                z   ccccccc    l                                                                                                                                                ',
+            '                                                z   ccccccc    l                                                                                                                                                ',
+            '                                                z   zzzzzzz    l                                                                                                                                                ',
+            '                                                z   zzzzzzz  684                                                                                                                                                ',
+            '                                                z   zzzzzzz  573                                                                                                                                                ',
+            '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
+            '                                                uuuuuuuuuuuuuuuu                                                                                                                                                ',
+        ]
     ]
 
     const levelCfg = {
@@ -169,8 +171,10 @@ scene("game", ({level, score}) => {
         'l': [sprite('pipeLeft'), solid(), scale(1), 'wall'],
         'r': [sprite('pipeRight'), solid(), scale(1), 'wall'],
 
-        '1': [sprite('pipeUpTopLeft'), solid(), scale(1), 'next-level'],
-        '2': [sprite('pipeUpTopRight'), solid(), scale(1), 'next-level'],
+        '(': [sprite('pipeUpTopLeft'), solid(), scale(1), 'wall'],
+        ')': [sprite('pipeUpTopRight'), solid(), scale(1), 'wall'],
+        '1': [sprite('pipeUpTopLeft'), solid(), scale(1), 'pipe'],
+        '2': [sprite('pipeUpTopRight'), solid(), scale(1), 'pipe'],
         '3': [sprite('pipeLeftBottom'), solid(), scale(1)],
         '4': [sprite('pipeLeftTop'), solid(), scale(1)],
         '5': [sprite('pipeSideBottomEnd'), solid(), scale(1)],
@@ -226,7 +230,7 @@ scene("game", ({level, score}) => {
         sprite('jim'),
         pos(width() / 2, height() / 2),
         body(),
-        scale(1),
+        scale(1.4),
         makeBig(),
         origin('bot'),
     ])
