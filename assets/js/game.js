@@ -73,7 +73,7 @@ loadSprite("semi", "sprites/semi-colon-walking.png", {
 loadSprite("slack", "sprites/slack.png")
 loadSprite("stack", "sprites/stack-overflow.png")
 loadSprite("youtube", "sprites/youtube-coin.png")
-
+loadSprite("jim-head", "sprites/jim-head.png")
 loadSprite("jim", "sprites/super-jim-32x32.png", {
     sliceX: 20,
     anims: {
@@ -234,7 +234,8 @@ scene("game", ({level, score}) => {
 
     const player = add([
         sprite('jim'),
-        pos(width() / 5, height() / 2),
+        // pos(width() / 5, height() / 2),
+        pos(64, 64),
         body(),
         scale(PLAYER_SCALE_SMALL),
         makeBig(),
@@ -255,7 +256,11 @@ scene("game", ({level, score}) => {
         if (player.pos.y >= CERTAIN_DEATH) {
             play('die')
             LIVES_REMAINING -= 1
-            go('lose', { score: scoreLabel.value, level: level})
+            if (LIVES_REMAINING > 0) {
+                go('lose', { score: scoreLabel.value, level: level})
+            } else {
+                go('gameover', {score: scoreLabel.value})
+            }
         }
     })   
 
@@ -344,7 +349,11 @@ scene("game", ({level, score}) => {
         } else {
             play('die')
             LIVES_REMAINING -= 1
-            go('lose', { score: scoreLabel.value, level: level})
+            if (LIVES_REMAINING > 0) {
+                go('lose', { score: scoreLabel.value, level: level})
+            } else {
+                go('gameover', {score: scoreLabel.value})
+            }
         }
     })
 
@@ -425,6 +434,50 @@ scene('lose', ({ score, level }) => {
     keyPress("space", () => {
 		go("game", {level: level, score: score});
 	});
+})
+
+scene('gameover', ({score}) => {
+    
+    
+    add([
+        sprite("jim-head"),
+        pos(40,40),
+        scale(2)
+    ])
+
+    add([
+        text('Game Over'),
+        pos((width()/2)-272, (height()/2)-64),
+        scale(4)
+    ])
+    
+    add([
+        text('You let Jim down!'),
+        pos((width()/2)-128, (height()/2)+64),
+        scale(2)
+    ])
+
+    add([
+        text('Your score: ' + score),
+        pos((width()/2)-128, (height()/2)+128),
+        scale(2)
+    ])
+
+    add([
+        text('Hit space to try again'),
+        pos((width()/2)-128, (height()/2)+192),
+        scale(2)
+    ])
+
+    keyPress("space", () => {
+        LIVES_REMAINING = 3; //needed to put LIVES_REMAINING back to 3
+        go("game", {level: 0, score: 0});
+    });
+    // add([
+    //     text('Your high-score: ' + highScore),
+    //     pos((width()/2), (height()/2)+256),
+    //     scale(2)
+    // ])
 })
 
 go("splash")
