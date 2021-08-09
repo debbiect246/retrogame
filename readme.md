@@ -4,22 +4,30 @@
 
 We used [GitHub Projects](https://github.com/debbiect246/retrogame/projects) to keep track of all the tasks we had to do to make this app and we used GitHub collaboratively, creating a repo which we all contributed to. The collaboration was further facilitated by lengthy video calls via the Slack app.
 
-The game is a reimaging of 1990's Super Mario Bros, with a Code Institute twist. [Mario](https://en.wikipedia.org/wiki/Super_Mario) went on an adventure to rescue Princess Peach from the clutches of Bowser, but our Jim has an even more perilous mission: to pull an all-nighter and gather the code for his unexpected Portfolio Project 6, all 50,000 lines of it! Along the way he must battle the denizens of Imposter Syndrome (semi-colons included) while navigating the slippery scaffolding of his mind. A loss of focus could mean Jim unexpectedly disappears into the void of mediocrity. Will he have enough resubmissions remaining to pass?!
+The game is a reimagining of 1985's Super Mario Bros, with a Code Institute twist. [Mario](https://en.wikipedia.org/wiki/Super_Mario_Bros.) went on an adventure to rescue Princess Peach from the clutches of Bowser, but our Jim has an even more perilous mission: to pull an all-nighter and gather the code for his unexpected Portfolio Project 6, all 50,000 lines of it! Along the way he must battle the denizens of Imposter Syndrome (stray semi-colons included) while navigating the slippery scaffolding of his mind. A loss of focus could mean Jim unexpectedly disappears into the void of mediocrity. Will he have enough resubmissions remaining to pass?!
 
-The powerups have changed since Mario. Mushrooms have become coffee, 1UP hearts are now fragments of Stack Overflow. Jim would do well to collect uncommitted lines of code and then find a GitHub token to commit them for a huge score multipler. Jim will fail his project (lose a life) if he falls into the void or is hit by one of Imposter Syndrome's minions. A coffee will make Jim grow, granting him an extra hit from enemies and the ability to break some blocks and jump higher than before. Once all of Jim's lives are spent, it's GAME OVER.
+The powerups have changed since Mario. Mushrooms have become coffee and 1UP hearts are now support from the slack community. Jim would do well to collect uncommitted lines of code and then find a GitHub token to commit them for a huge score multipler. Jim will fail his project (lose a life) if he falls into the void or is hit by one of Imposter Syndrome's minions. A coffee will make Jim grow, granting him an extra hit from enemies and the ability to break some blocks and jump higher than before. Once all of Jim's lives are spent, it's GAME OVER.
 
 ## Wireframes
 
 In order to have some basic structure in place and to be on the same page, we created the following wireframes for the game.  All wireframes were produced by Matt in either [balsamiq ](https://balsamiq.com/) - black and white images, or in [figma](https://www.figma.com/)- colour images:
 
-1. [Instructions](/wireframes/home-page-instructions-modal.png).  
-2. [Home page](/wireframes/home-page.png).
-3. [Styling](/wireframs/style-details.png).
-4. [Super Jim](/wireframes/super-jim.png).
+1. [Instructions](assets/wireframes/home-page-instructions-modal.png).  
+2. [Home page](assets/wireframes/home-page.png).
+3. [Styling](assets/wireframs/style-details.png).
+4. [Super Jim](assets/wireframes/super-jim.png).
 
-As we learned more about the relatively new KaboomJS library, the decision was made to keep the entirety of the game within the canvas element, meaning we deviated from our plans somewhat and resorted to a simple splash screen with controls within the game area itself. While a leaderboard was planned, capacity meant we were unable to implement this within the timeframe.
+As we learned more about the relatively new KaboomJS library, the decision was made to keep the entirety of the game within the canvas element, meaning we deviated from our plans somewhat and resorted to a simple splash screen with controls within the game area itself. While a leaderboard was planned, reductions in the team members available meant we were unable to implement this within the timeframe.
 
 ## UX
+
+* Super Jim 2021 is intended to be a fun browser based retro game for individual users to play for short periods of time. Incorporating familiar imagery to evoke memories from the users youth whilst demonstrating that great games don't require the latest 3d graphics rendering technologies. The graphical elements used immediately convey a visual indication of the fun nature of the site, along with the retro theme.
+
+### Site Goals
+* To provide users with a fun and simple game to play
+* To ensure accessing the game and understanding how to play is as simple as possible
+* To provide users with increasing levels of difficulty.
+* To bring back the fun of the original Mario game.
 
 ### User stories
 
@@ -34,7 +42,7 @@ As we learned more about the relatively new KaboomJS library, the decision was m
 
 ### Design features
 
-Great efforts were made to give the game a retro Mario vibe, reusing familiar assets and tilesets, juxtaposed with custom-made sprites.
+Great efforts were made to give the game a retro Mario vibe, recreating familiar assets and tilesets, juxtaposed with new custom-made sprites.
 
 - 2D platform physics with gravity
 - Fullscreen gameplay with all content contained in the canvas
@@ -68,13 +76,19 @@ Testing was carried out manual by all members of the team throughout its develop
 
 Jim resembles Mario and a certain member of the CI staff. He has animation states for idle, running, crouching and jumping.
 
+![Sprite Sheet for Super Jim](/assets/wireframes/jim-sprite-sheet.png)
+
 2.User wants a nostalgic platform game experience, with enemies and pits to avoid
 
 The first level of Super Mario Bros has been painstakingly adapted to include new enemies and powerups.
 
+![First Level](/assets/wireframes/first-level.png)
+
 3.User wants familiar control mechanics - walk, run, jump
 
 Jim can walk (ARROW keys), run (SHIFT), jump (SPACEBAR) and enter pipes (DOWN ARROW key).
+
+![Instructions](/assets/wireframes/instructions.png)
 
 4.User wants to know how to control their character
 
@@ -91,6 +105,8 @@ Score is updated for collecting items (coins, coffee, Stack Overflow medals, Sla
 7.User wants a win-condition
 
 Player must score 50,000 lines of code to win the game, and is presented by a win/loss scene.
+
+![Win Screen](/assets/wireframes/you-win.png)
 
 8.User wants a leaderboard so that they can check out highest scores
 
@@ -155,7 +171,7 @@ We all worked in different ways but overall the process used by collaborators wa
 
 - Add different sprites/tilesets for level types
 
-- Add Imposter Syndrom as a boss
+- Add Imposter Syndrome as a boss
 
 - Add new enemy types/mechanics (jumping, shooting etc)
 
@@ -171,3 +187,4 @@ The [Youtube video](https://youtu.be/4OaHB0JbJDI) we all used to get up to speed
 
 Matt used [this colour palette from lospec.com](https://lospec.com/palette-list/endesga-64) for the design for the game.
 Matt modified images from [the mushroomkingdom.net](https://themushroomkingdom.net/media/smb/wav) to create the character and objects used in the game.
+Ed found [this source for the background image](https://vnitti.itch.io/) we considered multiple options before deciding that the grassy mountains were the most similar to Jim's palacial backgarden.
