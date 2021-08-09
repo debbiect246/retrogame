@@ -1,98 +1,173 @@
 ![SuperJim 2021](assets/sprites/title.png)
 
-[SuperJim 2021](https://debbiect246.github.io/retrogame/) is a retrogame produced by a group of coders Matt, Monika, Ed, Deborah - The Retronauts team - participating in the Retro Gaming Hackathon organised by Code Institute. It took place during one weekend in August 2021.
+[SuperJim 2021](https://debbiect246.github.io/retrogame/) is a game produced by The Retronauts team (Matt, Monika, Ed, Deborah) for the Code Institute Retro Gaming Hackathon, which took place over a single weekend in August 2021.
 
-We used [GitHub Projects](https://github.com/debbiect246/retrogame/projects) to keep track of all the tasks we had to do to make this app and we used GitHub collaboratively, creating a repo which we all contributed to. The collaboration was further facilitated by lengthy video calls via the Slack app. 
+We used [GitHub Projects](https://github.com/debbiect246/retrogame/projects) to keep track of all the tasks we had to do to make this app and we used GitHub collaboratively, creating a repo which we all contributed to. The collaboration was further facilitated by lengthy video calls via the Slack app.
 
+The game is a reimaging of 1990's Super Mario Bros, with a Code Institute twist. [Mario](https://en.wikipedia.org/wiki/Super_Mario) went on an adventure to rescue Princess Peach from the clutches of Bowser, but our Jim has an even more perilous mission: to pull an all-nighter and gather the code for his unexpected Portfolio Project 6, all 50,000 lines of it! Along the way he must battle the denizens of Imposter Syndrome (semi-colons included) while navigating the slippery scaffolding of his mind. A loss of focus could mean Jim unexpectedly disappears into the void of mediocrity. Will he have enough resubmissions remaining to pass?!
 
-This app recreates the Mario game with a twist! Mario was a popular platform game in the 1990s which was very popular with gamers.  [Mario](https://en.wikipedia.org/wiki/Super_Mario) still is a popular game which is still played by gamers and features a character - Mario who has to avoid obstacles and rescue a character- once this is done the game ends.  In our game the central character is a student of code institute and he has to collect 6 coins which represent projects needed to pass the course.  Along the way there are "baddies" who try to stop this happening including examples of bad code!  The character has won the game when he has got through to the end of the game having collected all 6 projects needed and having survived all levels.
-
+The powerups have changed since Mario. Mushrooms have become coffee, 1UP hearts are now fragments of Stack Overflow. Jim would do well to collect uncommitted lines of code and then find a GitHub token to commit them for a huge score multipler. Jim will fail his project (lose a life) if he falls into the void or is hit by one of Imposter Syndrome's minions. A coffee will make Jim grow, granting him an extra hit from enemies and the ability to break some blocks and jump higher than before. Once all of Jim's lives are spent, it's GAME OVER.
 
 ## Wireframes
 
-In order to have some basic structure in place and to be on the same page, we created the following wireframes for the game.  All wireframes were produced by Matt in either [balsamiq ](https://balsamiq.com/) - black and white images, or in [figma](https://www.figma.com/)- colour images.
+In order to have some basic structure in place and to be on the same page, we created the following wireframes for the game.  All wireframes were produced by Matt in either [balsamiq ](https://balsamiq.com/) - black and white images, or in [figma](https://www.figma.com/)- colour images:
 
-1. [wireframes for the game instructions](/wireframes/home-page-instructions-modal.png).  
-2. [wireframes for the home page](/wireframes/home-page.png).
-3. [wireframes for style](/wireframs/style-details.png).
-4. [wireframes for super-jim](/wireframes/super-jim.png).
+1. [Instructions](/wireframes/home-page-instructions-modal.png).  
+2. [Home page](/wireframes/home-page.png).
+3. [Styling](/wireframs/style-details.png).
+4. [Super Jim](/wireframes/super-jim.png).
 
+As we learned more about the relatively new KaboomJS library, the decision was made to keep the entirety of the game within the canvas element, meaning we deviated from our plans somewhat and resorted to a simple splash screen with controls within the game area itself. While a leaderboard was planned, capacity meant we were unable to implement this within the timeframe.
 
-
-   
 ## UX
 
 ### User stories
 
-1. User wants to see Super Jim as the central character on the screen.
-2. User wants Super Jim to avoid baddies to collect 6 coins which represent project.
-3. User wants Super Jim to move up levels of increasing difficulty.
-4. User wants a points system for scoring points.
-5. User wants a leaderboard so that they can check out highest scores.
-6. User wants an instruction screen explaining how game works.
+1. User wants an eerily familiar hero, with animations
+2. User wants a nostalgic platform game experience, with enemies and pits to avoid
+3. User wants familiar control mechanics - walk, run, jump
+4. User wants to know how to control their character
+5. User wants to be able to take enemies down
+6. User wants to keep track of their progress/performance through their score
+7. User wants a win-condition
+8. User wants a leaderboard so that they can check out highest scores
 
-## Design features
+### Design features
 
-* Start screen 
-* Instructions screen
-* Play button
-* Platform game screen with background and Super Jim character
+Great efforts were made to give the game a retro Mario vibe, reusing familiar assets and tilesets, juxtaposed with custom-made sprites.
 
+- 2D platform physics with gravity
+- Fullscreen gameplay with all content contained in the canvas
+- Custom sprites
+- Evocative background sprite
+- Animated player character
+- Tight keyboard controls
+- Sound effects
+- Score system
+- Win/loss condition
 
 ## Technologies Used
 
-* [HTML](https://www.w3schools.com/html/) or Hypertext markup language. HTML is used to create the structure of web pages.  It consists of tags which tell the browser how to set out text and images on the page. Hypertext is the method by which you move  around on the web, markups are the tags which set out the structure of the webpage, thus HTML is a language for web creation with  its own structure and syntax. The data in the tags is read by the web browser enabling you to create any web page you like. In 
-this project my templates are all written in HTML. There is a template for adding, deleting, editing and adding recipes as well  as one for viewing information about each island. The base template sets out the way in which the website should look and information from this is used in each of the other templates.
+- [HTML](https://www.w3schools.com/html/) to house the canvas element.
 
-* [CSS](https://www.w3schools.com/Css/) stands for Cascading Style sheets which is a type of style language which sets out how the webpage should be styled. It allows the user to style the webpage in a particular way, making the UX richer and more meaningful for the user.
+- [CSS](https://www.w3schools.com/Css/) to remove the default margins of padding for our fullscreen game.
 
-* [kaboom.js](https://kaboomjs.com/) is a javascript library for building games.
+- [kaboom.js](https://kaboomjs.com/), a new javascript library for building canvas games quickly.
 
-* We used [Chrome Developer Tools](https://developers.google.com/web/tools/chrome-devtools/) to work on the code. Chrome dev tools are a set of tools designed to give the developer tools to amend code in a testing environment in order to enhance the UX and functionality experience. 
+- [Chrome Developer Tools](https://developers.google.com/web/tools/chrome-devtools/) to test UI.
 
-* We used [vscode](https://code.visualstudio.com/) and gitpod [gitpod](https://www.gitpod.io/) as our coding editors.  Lots of extensions  ere available to check the syntax of the code.
-
+- We used [VS Code](https://code.visualstudio.com/) and [Gitpod](https://www.gitpod.io/) as our coding editors.
 
 ## Testing
 
-Testing was carried out by human beings.  As each part of the game was being developed it was tested on screen checking that it worked and after it had been committed to the repo it was again tested by the person doing the commit to ensure that it worked as intended.
+Testing was carried out manual by all members of the team throughout its development. As each part of the game was being developed it was tested on screen checking that it worked and after it had been committed to the repo it was again tested by the person doing the commit to ensure that it worked as intended.
 
+### Meeting User stories
+
+1.User wants an eerily familiar hero, with animations
+
+Jim resembles Mario and a certain member of the CI staff. He has animation states for idle, running, crouching and jumping.
+
+2.User wants a nostalgic platform game experience, with enemies and pits to avoid
+
+The first level of Super Mario Bros has been painstakingly adapted to include new enemies and powerups.
+
+3.User wants familiar control mechanics - walk, run, jump
+
+Jim can walk (ARROW keys), run (SHIFT), jump (SPACEBAR) and enter pipes (DOWN ARROW key).
+
+4.User wants to know how to control their character
+
+On starting a level the controls are visible on the background.
+
+5.User wants to be able to take enemies down
+
+Player can jump (or simply drop) onto an enemy's head to dispatch them.
+
+6.User wants to keep track of their progress/performance through their score
+
+Score is updated for collecting items (coins, coffee, Stack Overflow medals, Slack medals) with a multiplier for committing code via the Github medal. Score is retained between levels.
+
+7.User wants a win-condition
+
+Player must score 50,000 lines of code to win the game, and is presented by a win/loss scene.
+
+8.User wants a leaderboard so that they can check out highest scores
+
+This was not achieved within the timeframe.
+
+### Bugs
+
+1. Jim sometimes falls through the game map, resulting in an untimely death
+
+Attempts to resolve this included changes to the scale of sprites, applying areas to sprites, reducing the player's maximum velocity. The issue was mitigated but is still present, albeit inconsistently
+
+2.Boundary issues between sprites
+
+Issues remain, as part of Matt's epic journey to create assets for the game.
+
+3.Resonsiveness of canvas on resizing, and scaling issues
+
+Responsiveness was not a requirement for the project, but work required to ensure scaling is fixed for different screens sizes and on browser resizing.
+
+4.Player would die if falling on an enemy without the isJumping value being true
+
+**Resolved** on discovery of the `falling()` Kaboom method.
+
+5.Enemies would not bounce off solid objects when running into them
+
+**Resolved** by reducing the scaling of wall objects
+
+6.Animations would not advance during keyDown event listeners
+
+**Resolved** by adding conditional statement to the event listner, checking the `isMoving` value
+
+7.Character sprite would not change direction
+
+**Resolved** by applying a negative scale to the x axis on the respective event listeners.
 
 ## Deployment
 
-App was deployed to github pages. Game can be accessed [here](https://debbiect246.github.io/retrogame/) or by clicking on the game title at the start of this readme.
+App was deployed to Github Pages and can be accessed [here](https://debbiect246.github.io/retrogame/).
 
 ## Breakdown of steps involved in creating the app
 
 We all worked in different ways but overall the process used by collaborators was as follows:
 
-1. Debbie created a new github repo for the project.
+1. Debbie created a new Github repo for the project.
 2. Branches were created for Debbie, Matt, Ed and Monica and work was done on these branches and then pull requests made.  Pull requests were reviewed by other team members and merged when appropriate.
 3. Team discussions were held about how to develop the game.  
 4. Team coding sessions were done so that those people working on different parts of functionality for the game were able to ask further questions and get support in live time.
-5.  A project board was created in github and team members were able to select cards to work on.  Matt spent some time on designing wireframes and assets for the game, Ed and Monica spent some time on the assets and scenes for the game and Debbie spent time setting up the repo, reviewing and merging some pull requests - other people could also do this for other team member's code.  Debbie also spent time updating the readme at regular intervals and coding the instruction screen and leaderboard.
-6. Testing was done at regular intervals and the game reviewed during group discussions each day, usually starting around 8pm and going forward into the evening.
-7.  We all had to learn kaboom js at the start as this was a new javascript library for all of us and then we went on to use it to generate ideas for the game and to create the relevant sprites, scenes and level.  Matt created the wireframes for everyone to work from.
-8.  Once we had started on the initial process of creating the game, Debbie worked on the readme, keeping it up to date and monitoring the commits that were taking place as well as updating the hackathon app with details of the games' live link and github link.
-
-
+5. A project board was created in github and team members were able to select cards to work on. Matt spent some time on designing wireframes and assets for the game, Ed and Monica spent some time on the assets and scenes for the game and Debbie spent time setting up the repo, reviewing and merging some pull requests - other people could also do this for other team member's code.  Debbie also spent time updating the readme at regular intervals and coding the instruction screen and leaderboard.
+6. Testing was done at regular intervals and the game reviewed during group discussions each day, usually starting around 8pm and going forward into the morning.
+7. We all had to learn Kaboom JS, which is a relatively new Javascript library. We went on to use it to generate ideas for the game and to create the relevant sprites, scenes and maps. Matt created the wireframes for everyone to work from.
+8. Once we had started on the initial process of creating the game, Debbie worked on the readme, keeping it up to date and monitoring the commits that were taking place as well as updating the hackathon app with details of the game's live link and Github link.
   
-## Future improvements
+## Future features
 
- 1. Add further levels to the game.
- 2. Add a leaderboard to the game so users can compare their scores with other users.
- 3. Countdown timer could be added to the game.
- 
+- Add further levels to the game
+
+- Add more powerups (shooting etc)
+
+- Add animations for all other sprites, including block destruction etc
+
+- Countdown timer could be added to the game
+
+- Add different sprites/tilesets for level types
+
+- Add Imposter Syndrom as a boss
+
+- Add new enemy types/mechanics (jumping, shooting etc)
+
+- Include actual coding relevant pickups (complete the code to advance etc)
+
+- Add a leaderboard to the game so users can compare their scores with other users
 
 ## Credits
 
-The [You tube video](https://youtu.be/4OaHB0JbJDI) we all used to get up to speed with using kaboom.js was produced by free code camp.
-
+The [Youtube video](https://youtu.be/4OaHB0JbJDI) we all used to get up to speed with using kaboom.js was produced by Free Code Camp.
 
 ### Media  
 
 Matt used [this colour palette from lospec.com](https://lospec.com/palette-list/endesga-64) for the design for the game.
-Matt and  Ed used images from [the mushroomkingdom.net](https://themushroomkingdom.net/media/smb/wav) which were modified to create the character and objects used in the game.
-
-
-
+Matt modified images from [the mushroomkingdom.net](https://themushroomkingdom.net/media/smb/wav) to create the character and objects used in the game.
