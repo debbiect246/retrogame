@@ -2,7 +2,7 @@ kaboom(
     {
         global: true,
         fullscreen: true,
-        scale: 1.6,
+        scale: 1,
         debug: true,
         clearColor: [0,0,1,0.4],
     }
@@ -123,7 +123,6 @@ const PLAYER_SCALE_BIG = 1.4
 let CURRENT_PLAYER_SCALE = PLAYER_SCALE_SMALL
 
 const BADDIE_SPEED = 60
-// const BADDIE_JUMP_FORCE = 300
  
 let isJumping = true
 let isMoving = false
@@ -273,15 +272,15 @@ scene("game", ({level, score}) => {
         'G': [sprite('github'), scale(0.75), 'github'],
         '#': [sprite('gold-code-scroll'), scale(0.75), 'gold-code-scroll'],
         'g': [sprite('grass-rubble-original'), solid()],
-        'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', {timer: 0}, scale(0.8)],
+        'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', scale(0.8)],
         'm': [sprite('mystery-box'), solid(), 'mystery-box'],
         'M': [sprite('mystery-box'), solid(), 'mystery-box-coin'],
         'n': [sprite('mystery-box'), solid(), 'mystery-box-slack'],
         'N': [sprite('mystery-box'), solid(), 'mystery-box-code'],
-        ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi', scale(0.8)],
+        ';': [sprite('semi'), body(), {dir: -1}, 'baddie', 'semi', scale(0.8)],
         'R': [sprite('grass-rubble-blue'), solid()],
         's': [sprite('stack'), scale(1)],
-        'S': [sprite('slack'), scale(1), 'slack', body(), scale(0.8), {dir: 1}, {timer: 0}],
+        'S': [sprite('slack'), scale(1), 'slack', body(), scale(0.8), {dir: 1}],
         'o': [sprite('rubble'), solid()],
         'u': [sprite('rubble-blue'), solid(), 'destructible', 'wall'],
         'l': [sprite('pipeLeft'), solid(), scale(1), 'wall'],
@@ -334,7 +333,6 @@ scene("game", ({level, score}) => {
     add([text(`ARROWS: Move\nSPACE : Jump\nSHIFT : Run\nDOWN  : Enter pipe`), pos(width() / 4, height() / 3)])
 
     function makeBig() {
-        // let timer = 0
         let isBig = false
         return {
             update() {
@@ -360,9 +358,8 @@ scene("game", ({level, score}) => {
 
     const player = add([
         sprite('jim'),
-        // pos(width() / 5, height() / 2),
         pos(64, 64),
-        body(),
+        body({maxVel: 420,}),
         scale(PLAYER_SCALE_SMALL),
         makeBig(),
         origin('center'),
@@ -370,7 +367,6 @@ scene("game", ({level, score}) => {
     
     player.action(() => {
         camPos(player.pos.x, height() / 2)
-        // console.log(CURRENT_JUMP_FORCE)
         if (player.grounded()) {
             isJumping = false
             if (!isMoving && !isCrouching) {
@@ -434,7 +430,6 @@ scene("game", ({level, score}) => {
     })
 
     collides('slack', 'wall', (slack) => {
-        // TODO: fix scale/tile causing baddies to get stuck on large tiles (e.g. pipes)
         slack.dir =- slack.dir
     })
 
@@ -510,7 +505,7 @@ scene("game", ({level, score}) => {
 
     player.overlaps('baddie', (baddie) => {
         if (player.isBig()) {
-            // play('bump')
+            play('bump')
             player.shrink()
         } else {
             
@@ -527,11 +522,6 @@ scene("game", ({level, score}) => {
 
     action('baddie', (baddie) => {
         baddie.move(baddie.dir * BADDIE_SPEED, 0)
-        // baddie.timer -= dt()
-        // if (baddie.timer <=0) {
-        //     baddie.jump()
-        //     baddie.timer = rand(10)
-        // }
     })
 
     collides('baddie', 'wall', (baddie) => {
@@ -655,11 +645,6 @@ scene('gameover', ({score}) => {
         LIVES_REMAINING = 3; //needed to put LIVES_REMAINING back to 3
         go("game", {level: 0, score: 0});
     });
-    // add([
-    //     text('Your high-score: ' + highScore),
-    //     pos((width()/2), (height()/2)+256),
-    //     scale(2)
-    // ])
 })
 scene('you-win', ({score}) => {
         
