@@ -136,18 +136,20 @@ scene("splash", () => {
     add([
         sprite("title"),
         origin("center"),
-        pos(width() / 2, 220)
+        pos(width() / 2, 100),
+        scale(0.7)
     ])
 
     add([
         text("Help Jim rescue his Portfolio Project Six\n\n from the " + 
-        "minions of Imposter Syndrome\n\n and the pesky Semicolons.\n\n" + 
+        "minions of Imposter Syndrome\n\n and those pesky Semicolons.\n\n" + 
         "\n\nTo earn a Distinction he will need to\n\n gather lines of code," + 
         " peruse Stack Overflow,\n\n" + 
-        "check Slack and drink lots of coffee!\n\n\n\n" + 
+        "check Slack, and drink lots of coffee!\n\n\n\n" + 
         "Hit SPACEBAR to start!"),
         origin("center"),
-		pos(width() / 2, 480),
+		pos(width() / 2, 300),
+        scale(0.7)
     ])
     keyPress("space", () => {
 		go("game", {level: 0, score: 0});
@@ -596,7 +598,12 @@ scene("game", ({level, score}) => {
 })
 
 scene('lose', ({ score, level }) => {
-    add([text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), origin('left'), pos(width()/2, height()/ 2)])
+    add([
+        text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), 
+        origin('left'), 
+        pos(width()/2, height()/ 2),
+        scale(0.8)
+    ])
     LINES_OF_CODE = 0
     keyPress("space", () => {
 		go("game", {level: level, score: score});
@@ -608,13 +615,14 @@ scene('gameover', ({score}) => {
     add([
         sprite("angry-jim-head"),
         pos(40,40),
-        scale(2)
+        scale(0.8)
     ])
 
     const gameOver = add([
         text('Game Over'),
         pos((width()/2), (height()/2)),
-        origin('center')
+        origin('center'),
+        scale(0.7)
     ])
 
     gameOver.action(() => {
@@ -625,21 +633,21 @@ scene('gameover', ({score}) => {
         text('You let Jim down!'),
         pos(width()/2, (height()/2)+64),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Your score: ' + score),
-        pos((width()/2), (height()/2)+128),
+        pos((width()/2), (height()/2)+104),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Hit space to try again'),
-        pos((width()/2), (height()/2)+192),
+        pos((width()/2), (height()/2)+144),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     LINES_OF_CODE = 0
@@ -658,13 +666,14 @@ scene('you-win', ({score}) => {
     add([
         sprite("jim-head"),
         pos(40,40),
-        scale(2)
+        scale(0.8)
     ])
 
     const youWin = add([
         text('YOU WIN!'),
         pos((width()/2), (height()/2)),
-        origin('center')
+        origin('center'),
+        scale(0.7)
     ])
 
     youWin.action(() => {
@@ -675,21 +684,21 @@ scene('you-win', ({score}) => {
         text('You saved Jim and made him very happy!'),
         pos(width()/2, (height()/2)+64),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Your score: ' + score),
-        pos((width()/2), (height()/2)+128),
+        pos((width()/2), (height()/2)+104),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Hit space to play again'),
-        pos((width()/2), (height()/2)+192),
+        pos((width()/2), (height()/2)+144),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     LINES_OF_CODE = 0
