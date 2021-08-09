@@ -136,18 +136,20 @@ scene("splash", () => {
     add([
         sprite("title"),
         origin("center"),
-        pos(width() / 2, 220)
+        pos(width() / 2, 100),
+        scale(0.7)
     ])
 
     add([
         text("Help Jim rescue his Portfolio Project Six\n\n from the " + 
-        "minions of Imposter Syndrome\n\n and the pesky Semicolons.\n\n" + 
+        "minions of Imposter Syndrome\n\n and those pesky Semicolons.\n\n" + 
         "\n\nTo earn a Distinction he will need to\n\n gather lines of code," + 
         " peruse Stack Overflow,\n\n" + 
-        "check Slack and drink lots of coffee!\n\n\n\n" + 
+        "check Slack, and drink lots of coffee!\n\n\n\n" + 
         "Hit SPACEBAR to start!"),
         origin("center"),
-		pos(width() / 2, 480),
+		pos(width() / 2, 300),
+        scale(0.7)
     ])
     keyPress("space", () => {
 		go("game", {level: 0, score: 0});
