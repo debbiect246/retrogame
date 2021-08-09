@@ -1,11 +1,11 @@
-# SuperJim 2021 
+![SuperJim 2021](assets/sprites/title.png)
 
-[SuperJim 2021](https://debbiect246.github.io/retrogame/) is a retrogame produced by team 8 - The Retronauts in the CI retrogame hackathon. 
+[SuperJim 2021](https://debbiect246.github.io/retrogame/) is a retrogame produced by a group of coders Matt, Monika, Ed, Deborah - The Retronauts team - participating in the Retro Gaming Hackathon organised by Code Institute. It took place during one weekend in August 2021.
 
-We are a group of coders, Matt, Monika, Ed, Deborah -   team 8 in the  CI retro games hackathon, which took place in August 2021.  We used git hub projects [github projects](https://github.com/debbiect246/retrogame/projects)  to keep track of all the tasks we had to do to make this app and we used github collaboratively, creating a repo which we all contributed to.
+We used [GitHub Projects](https://github.com/debbiect246/retrogame/projects) to keep track of all the tasks we had to do to make this app and we used GitHub collaboratively, creating a repo which we all contributed to. The collaboration was further facilitated by lengthy video calls via the Slack app. 
 
 
-This app recreates the Mario game with a twist! Mario was a popular platform game in the 1990s which was very popular with gamers.  [Mario](https://en.wikipedia.org/wiki/Super_Mario#:~:text=The%20Super%20Mario%20games%20are%20typically%20in%20the,across%20platforms%20and%20atop%20enemies%20in%20themed%20levels) still is a popular game which is still played by gamers and features a character - Mario who has to avoid obstacles and rescue a character- once this is done the game ends.  In our game the central character is a student of code institute and he has to collect 6 coins which represent projects needed to pass the course.  Along the way there are "baddies" who try to stop this happening including examples of bad code!  The character has won the game when he has got through to the end of the game having collected all 6 projects needed and having survived all levels.
+This app recreates the Mario game with a twist! Mario was a popular platform game in the 1990s which was very popular with gamers.  [Mario](https://en.wikipedia.org/wiki/Super_Mario) still is a popular game which is still played by gamers and features a character - Mario who has to avoid obstacles and rescue a character- once this is done the game ends.  In our game the central character is a student of code institute and he has to collect 6 coins which represent projects needed to pass the course.  Along the way there are "baddies" who try to stop this happening including examples of bad code!  The character has won the game when he has got through to the end of the game having collected all 6 projects needed and having survived all levels.
 
 
 ## Wireframes
