@@ -2,7 +2,7 @@ kaboom(
     {
         global: true,
         fullscreen: true,
-        scale: 1,
+        scale: 1.6,
         debug: true,
         clearColor: [0,0,1,0.4],
     }
@@ -103,6 +103,14 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
 })
 loadSprite("title", "sprites/title.png")
 
+loadSprite('sky', 'sprites/sky_fc.png')
+loadSprite('farMountains', 'sprites/far_mountains_fc.png')
+loadSprite('grassyMountains', 'sprites/grassy_mountains_fc.png')
+loadSprite('cloudsMid', 'sprites/clouds_mid_fc.png')
+loadSprite('hill', 'sprites/hill.png')
+loadSprite('cloudsFront', 'sprites/clouds_front_fc.png')
+
+
 const WALK_SPEED = 120
 const RUN_SPEED = 180
 const JUMP_FORCE = 400
@@ -122,6 +130,7 @@ let isCrouching = false
 
 let LIVES_REMAINING = 3
 let LINES_OF_CODE = 0
+
 scene("splash", () => {
     add([
         sprite("title"),
@@ -147,6 +156,49 @@ scene("splash", () => {
 scene("game", ({level, score}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
     camIgnore(["bg", "ui"]);
+
+    add([
+		sprite("sky"),
+		layer("bg"),
+		pos(0, 0),
+		"background",
+        scale(width()/ 384, height() / 216),
+	]);
+    add([
+        sprite("farMountains"),
+		layer("bg"),
+		pos(0, 0),
+		"background",
+        scale(width()/ 384, height() / 216),
+	]);
+    add([
+        sprite("grassyMountains"),
+		layer("bg"),
+		pos(0, 0),
+		"background",
+        scale(width()/ 384, height() / 216),
+	]);
+    add([
+        sprite("cloudsMid"),
+		layer("bg"),
+		pos(0, 0),
+		"background",
+        scale(width()/ 384, height() / 216),
+	]);
+    add([
+        sprite("hill"),
+        layer("bg"),
+        pos(0, 0),
+        "background",
+        scale(width()/ 384, height() / 216),
+    ]);
+    add([
+        sprite("cloudsFront"),
+        layer("bg"),
+        pos(0, 0),
+        "background",
+        scale(width()/ 384, height() / 216),
+    ]);
 
     const maps = [
         [
@@ -275,7 +327,8 @@ scene("game", ({level, score}) => {
         }
     ])
 
-    add([text('level ' + parseInt(level + 1) ), pos(40, 32)])
+    add([text('Level ' + parseInt(level + 1) ), pos(width() / 4, height() / 4)])
+    add([text(`ARROWS: Move\nSPACE : Jump\nSHIFT : Run\nDOWN  : Enter pipe`), pos(width() / 4, height() / 3)])
 
     function makeBig() {
         // let timer = 0
@@ -284,11 +337,6 @@ scene("game", ({level, score}) => {
             update() {
                 if (isBig) {
                     CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
-                    CURRENT_PLAYER_SCALE = PLAYER_SCALE_BIG
-                    // timer -= dt()
-                // if (timer <= 0) {
-                //     this.shrink()
-                // }
                 }
             },
             isBig() {
@@ -298,12 +346,10 @@ scene("game", ({level, score}) => {
                 this.scale = vec2(1)
                 CURRENT_JUMP_FORCE = JUMP_FORCE
                 CURRENT_PLAYER_SCALE = PLAYER_SCALE_SMALL
-                // timer = 0
                 isBig = false
             },
             grow() {
                 this.scale = vec2(1.2)
-                // timer = time
                 isBig = true     
             }
         }
@@ -321,6 +367,7 @@ scene("game", ({level, score}) => {
     
     player.action(() => {
         camPos(player.pos.x, height() / 2)
+        // console.log(CURRENT_JUMP_FORCE)
         if (player.grounded()) {
             isJumping = false
             if (!isMoving && !isCrouching) {
@@ -392,7 +439,7 @@ scene("game", ({level, score}) => {
         play('life')
         destroy(slack)
         scoreLabel.value += 100
-        scoreLabel.text = scoreLabel.value
+        scoreLabel.text = `Score: ${scoreLabel.value}`
         // need to add power up effect discuss with Ed
         LIVES_REMAINING += 1
         livesLabel.value = LIVES_REMAINING
@@ -403,7 +450,7 @@ scene("game", ({level, score}) => {
         play('powerup')
         destroy(coffee)
         scoreLabel.value += 10
-        scoreLabel.text = scoreLabel.value
+        scoreLabel.text = `Score: ${scoreLabel.value}`
         player.grow()
     })
 
@@ -411,7 +458,7 @@ scene("game", ({level, score}) => {
         play('coin')
         destroy(coin)
         scoreLabel.value++
-        scoreLabel.text = scoreLabel.value
+        scoreLabel.text = `Score: ${scoreLabel.value}`
     })
 
     player.collides('code-scroll', (code) => {
@@ -425,7 +472,7 @@ scene("game", ({level, score}) => {
         play('github')
         destroy(g)
         scoreLabel.value += (LINES_OF_CODE * 100)
-        scoreLabel.text = scoreLabel.value
+        scoreLabel.text = `Score: ${scoreLabel.value}`
         LINES_OF_CODE = 0
         codeLabel.text = 'Uncommited Code: ' + LINES_OF_CODE
     })
@@ -513,7 +560,7 @@ scene("game", ({level, score}) => {
     keyRelease('right', () => {
         isMoving = false
     })
-    
+
     keyDown('down', () => {
         if (!isMoving) {
             player.play('crouch')
