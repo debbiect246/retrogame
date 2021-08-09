@@ -1,4 +1,4 @@
-![SuperJim 2021](assets/sprites/title.png)
+[![SuperJim 2021](assets/sprites/title.png)](https://debbiect246.github.io/retrogame/)
 
 [SuperJim 2021](https://debbiect246.github.io/retrogame/) is a game produced by The Retronauts team (Matt, Monika, Ed, Deborah) for the Code Institute Retro Gaming Hackathon, which took place over a single weekend in August 2021.
 
