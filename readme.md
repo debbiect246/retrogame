@@ -12,10 +12,10 @@ The powerups have changed since Mario. Mushrooms have become coffee and 1UP hear
 
 In order to have some basic structure in place and to be on the same page, we created the following wireframes for the game.  All wireframes were produced by Matt in either [balsamiq ](https://balsamiq.com/) - black and white images, or in [figma](https://www.figma.com/)- colour images:
 
-1. [Instructions](/wireframes/home-page-instructions-modal.png).  
-2. [Home page](/wireframes/home-page.png).
-3. [Styling](/wireframs/style-details.png).
-4. [Super Jim](/wireframes/super-jim.png).
+1. [Instructions](assets/wireframes/home-page-instructions-modal.png).  
+2. [Home page](assets/wireframes/home-page.png).
+3. [Styling](assets/wireframs/style-details.png).
+4. [Super Jim](assets/wireframes/super-jim.png).
 
 As we learned more about the relatively new KaboomJS library, the decision was made to keep the entirety of the game within the canvas element, meaning we deviated from our plans somewhat and resorted to a simple splash screen with controls within the game area itself. While a leaderboard was planned, reductions in the team members available meant we were unable to implement this within the timeframe.
 
