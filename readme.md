@@ -28,8 +28,7 @@ In order to have some basic structure in place and to be on the same page, we cr
 2. User wants Super Jim to avoid baddies to collect 6 coins which represent project.
 3. User wants Super Jim to move up levels of increasing difficulty.
 4. User wants a points system for scoring points.
-5. User wants a leaderboard so that they can check out highest scores.
-6. User wants an instruction screen explaining how game works.
+5. User wants an instruction screen explaining how game works.
 
 ## Design features
 
