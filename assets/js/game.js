@@ -598,7 +598,12 @@ scene("game", ({level, score}) => {
 })
 
 scene('lose', ({ score, level }) => {
-    add([text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), origin('left'), pos(width()/2, height()/ 2)])
+    add([
+        text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), 
+        origin('left'), 
+        pos(width()/2, height()/ 2),
+        scale(0.8)
+    ])
     LINES_OF_CODE = 0
     keyPress("space", () => {
 		go("game", {level: level, score: score});
@@ -610,13 +615,14 @@ scene('gameover', ({score}) => {
     add([
         sprite("angry-jim-head"),
         pos(40,40),
-        scale(2)
+        scale(0.8)
     ])
 
     const gameOver = add([
         text('Game Over'),
         pos((width()/2), (height()/2)),
-        origin('center')
+        origin('center'),
+        scale(0.7)
     ])
 
     gameOver.action(() => {
@@ -627,21 +633,21 @@ scene('gameover', ({score}) => {
         text('You let Jim down!'),
         pos(width()/2, (height()/2)+64),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Your score: ' + score),
-        pos((width()/2), (height()/2)+128),
+        pos((width()/2), (height()/2)+104),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Hit space to try again'),
-        pos((width()/2), (height()/2)+192),
+        pos((width()/2), (height()/2)+144),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     LINES_OF_CODE = 0
