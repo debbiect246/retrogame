@@ -80,6 +80,7 @@ loadSprite("slack", "sprites/slack.png")
 loadSprite("stack", "sprites/stack-overflow.png")
 loadSprite("youtube", "sprites/youtube-coin.png")
 loadSprite("jim-head", "sprites/jim-head.png")
+loadSprite("angry-jim-head", "sprites/angry-jim-head.png")
 loadSprite("jim", "sprites/super-jim-32x32.png", {
     sliceX: 20,
     anims: {
@@ -113,7 +114,7 @@ loadSprite('cloudsFront', 'sprites/clouds_front_fc.png')
 
 const WALK_SPEED = 120
 const RUN_SPEED = 180
-const JUMP_FORCE = 400
+const JUMP_FORCE = 500
 const BIG_JUMP_FORCE = 600
 let CURRENT_JUMP_FORCE = JUMP_FORCE
 const CERTAIN_DEATH = 1500
@@ -418,7 +419,7 @@ scene("game", ({level, score}) => {
         }
 
         if (obj.is('mystery-box-code')) {
-            gameLevel.spawn('@', obj.gridPos.sub(0,2))
+            gameLevel.spawn('@', obj.gridPos.sub(0,1))
             destroy(obj)
             gameLevel.spawn('-', obj.gridPos.sub(0,0))
             play('new')
@@ -457,7 +458,7 @@ scene("game", ({level, score}) => {
     player.collides('coin', (coin) => {
         play('coin')
         destroy(coin)
-        scoreLabel.value++
+        scoreLabel.value += 10
         scoreLabel.text = `Score: ${scoreLabel.value}`
     })
 
@@ -465,6 +466,13 @@ scene("game", ({level, score}) => {
         play('code')
         destroy(code)
         LINES_OF_CODE += 10
+        codeLabel.text = 'Uncommited Code: ' + LINES_OF_CODE
+    })
+
+    player.collides('gold-code-scroll', (code) => {
+        play('code')
+        destroy(code)
+        LINES_OF_CODE += 25
         codeLabel.text = 'Uncommited Code: ' + LINES_OF_CODE
     })
     
@@ -477,8 +485,6 @@ scene("game", ({level, score}) => {
         codeLabel.text = 'Uncommited Code: ' + LINES_OF_CODE
     })
 
-    
-    
     player.collides('baddie', (baddie) => {
         if (player.falling()) {
             play('stomp')    
@@ -489,10 +495,14 @@ scene("game", ({level, score}) => {
     
     player.collides('pipe', () => {
         keyPress('down', () => {
+            if (parseInt(scoreLabel.value) >= 50000) {
+                go('you-win',{score: scoreLabel.value})
+            } else {
             go('game', {
                 level: (level + 1) % maps.length,
                 score: scoreLabel.value
-            })
+                })
+            }
         })
     })
 
@@ -596,7 +606,7 @@ scene('lose', ({ score, level }) => {
 scene('gameover', ({score}) => {
         
     add([
-        sprite("jim-head"),
+        sprite("angry-jim-head"),
         pos(40,40),
         scale(2)
     ])
@@ -642,6 +652,52 @@ scene('gameover', ({score}) => {
     //     pos((width()/2), (height()/2)+256),
     //     scale(2)
     // ])
+})
+scene('you-win', ({score}) => {
+        
+    add([
+        sprite("jim-head"),
+        pos(40,40),
+        scale(2)
+    ])
+
+    const youWin = add([
+        text('YOU WIN!'),
+        pos((width()/2), (height()/2)),
+        origin('center')
+    ])
+
+    youWin.action(() => {
+        youWin.scale = Math.sin(time()) * 5;
+	});
+    
+    add([
+        text('You saved Jim and made him very happy!'),
+        pos(width()/2, (height()/2)+64),
+        origin('center'),
+        scale(2)
+    ])
+
+    add([
+        text('Your score: ' + score),
+        pos((width()/2), (height()/2)+128),
+        origin('center'),
+        scale(2)
+    ])
+
+    add([
+        text('Hit space to play again'),
+        pos((width()/2), (height()/2)+192),
+        origin('center'),
+        scale(2)
+    ])
+
+    LINES_OF_CODE = 0
+    keyPress("space", () => {
+        LIVES_REMAINING = 3; //needed to put LIVES_REMAINING back to 3
+        go("game", {level: 0, score: 0});
+    });
+
 })
 
 go("splash")
