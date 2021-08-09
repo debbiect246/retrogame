@@ -1,3 +1,4 @@
+// Load Kaboom library
 kaboom(
     {
         global: true,
@@ -8,8 +9,11 @@ kaboom(
     }
 );
 
+// Assets
+
 loadRoot('assets/')
 
+// Sounds
 loadSound("break", "sounds/break-block.wav");
 loadSound("bump", "sounds/bump.wav");
 loadSound("clearlevel", "sounds/level-clear.wav");
@@ -29,6 +33,7 @@ loadSound("powerup", "sounds/powerup.wav");
 loadSound("stomp", "sounds/stomp.wav");
 loadSound("time", "sounds/time-warning.wav");
 
+// Sprites
 loadSprite("blank", "sprites/blank-tile-original.png")
 loadSprite("brick", "sprites/brick.png")
 loadSprite("brownBrick", "sprites/brown-brick.png")
@@ -102,8 +107,11 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
         },
     },
 })
+
+// Title image
 loadSprite("title", "sprites/title.png")
 
+// Background image
 loadSprite('sky', 'sprites/sky_fc.png')
 loadSprite('farMountains', 'sprites/far_mountains_fc.png')
 loadSprite('grassyMountains', 'sprites/grassy_mountains_fc.png')
@@ -111,7 +119,7 @@ loadSprite('cloudsMid', 'sprites/clouds_mid_fc.png')
 loadSprite('hill', 'sprites/hill.png')
 loadSprite('cloudsFront', 'sprites/clouds_front_fc.png')
 
-
+// Global variables
 const WALK_SPEED = 120
 const RUN_SPEED = 180
 const JUMP_FORCE = 500
@@ -131,6 +139,9 @@ let isCrouching = false
 let LIVES_REMAINING = 3
 let LINES_OF_CODE = 0
 
+// Scenes
+
+// Splash
 scene("splash", () => {
     add([
         sprite("title"),
@@ -155,6 +166,7 @@ scene("splash", () => {
 	});
 })
 
+// Game
 scene("game", ({level, score}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
     camIgnore(["bg", "ui"]);
@@ -202,6 +214,7 @@ scene("game", ({level, score}) => {
         scale(width()/ 384, height() / 216),
     ]);
 
+    // Levels
     const maps = [
         [
             'o                                                                                                                                                                                                                BB',                
@@ -257,6 +270,7 @@ scene("game", ({level, score}) => {
         ]
     ]
     
+    // Level elements
     const levelCfg = {
         width: 32,
         height: 32,
@@ -275,6 +289,7 @@ scene("game", ({level, score}) => {
         'i': [sprite('imposter'), body(), {dir: -1}, 'baddie', scale(0.8)],
         'm': [sprite('mystery-box'), solid(), 'mystery-box'],
         'M': [sprite('mystery-box'), solid(), 'mystery-box-coin'],
+        '?': [sprite('blank'), {hidden: true, solid: true}, 'invisible'],
         'n': [sprite('mystery-box'), solid(), 'mystery-box-slack'],
         'N': [sprite('mystery-box'), solid(), 'mystery-box-code'],
         ';': [sprite('semi'), body(), {dir: -1}, 'baddie', 'semi', scale(0.8)],
@@ -300,6 +315,7 @@ scene("game", ({level, score}) => {
 
     const gameLevel = addLevel(maps[level], levelCfg)
 
+    // User interface
     const scoreLabel = add([
         text('Score: '+ score),
         pos(30, 6),
@@ -329,9 +345,11 @@ scene("game", ({level, score}) => {
         }
     ])
 
+    // Controls and level display at start
     add([text('Level ' + parseInt(level + 1) ), pos(width() / 4, height() / 4)])
     add([text(`ARROWS: Move\nSPACE : Jump\nSHIFT : Run\nDOWN  : Enter pipe`), pos(width() / 4, height() / 3)])
 
+    // Player function to make Jim grow
     function makeBig() {
         let isBig = false
         return {
@@ -356,6 +374,7 @@ scene("game", ({level, score}) => {
         }
     }
 
+    // Jim
     const player = add([
         sprite('jim'),
         pos(64, 64),
@@ -390,6 +409,12 @@ scene("game", ({level, score}) => {
     })   
 
     player.on("headbutt", (obj) => {
+        if (obj.is('invisible')) {
+            destroy(obj)
+            gameLevel.spawn('-', obj.gridPos.sub(0,0))
+            play('new')
+        }
+
         if (obj.is('destructible') && player.isBig()) {
             play('break')
             destroy(obj)
@@ -520,6 +545,7 @@ scene("game", ({level, score}) => {
         }
     })
 
+    // Baddies
     action('baddie', (baddie) => {
         baddie.move(baddie.dir * BADDIE_SPEED, 0)
     })
@@ -529,6 +555,7 @@ scene("game", ({level, score}) => {
         baddie.dir =- baddie.dir
     })
 
+    // Key event listeners
     keyDown('left', () => {
         if (keyIsDown('shift')) {
             player.move(-RUN_SPEED, 0)
@@ -584,9 +611,9 @@ scene("game", ({level, score}) => {
             }
         }
     })
-
 })
 
+// Lose scene
 scene('lose', ({ score, level }) => {
     add([
         text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), 
@@ -600,8 +627,8 @@ scene('lose', ({ score, level }) => {
 	});
 })
 
+// Gameover scene
 scene('gameover', ({score}) => {
-        
     add([
         sprite("angry-jim-head"),
         pos(40,40),
@@ -646,6 +673,8 @@ scene('gameover', ({score}) => {
         go("game", {level: 0, score: 0});
     });
 })
+
+// Win scene
 scene('you-win', ({score}) => {
         
     add([
@@ -694,4 +723,5 @@ scene('you-win', ({score}) => {
 
 })
 
+// Scene to start the game on
 go("splash")
