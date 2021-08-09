@@ -666,13 +666,14 @@ scene('you-win', ({score}) => {
     add([
         sprite("jim-head"),
         pos(40,40),
-        scale(2)
+        scale(0.8)
     ])
 
     const youWin = add([
         text('YOU WIN!'),
         pos((width()/2), (height()/2)),
-        origin('center')
+        origin('center'),
+        scale(0.7)
     ])
 
     youWin.action(() => {
@@ -683,21 +684,21 @@ scene('you-win', ({score}) => {
         text('You saved Jim and made him very happy!'),
         pos(width()/2, (height()/2)+64),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Your score: ' + score),
-        pos((width()/2), (height()/2)+128),
+        pos((width()/2), (height()/2)+104),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     add([
         text('Hit space to play again'),
-        pos((width()/2), (height()/2)+192),
+        pos((width()/2), (height()/2)+144),
         origin('center'),
-        scale(2)
+        scale(0.8)
     ])
 
     LINES_OF_CODE = 0
