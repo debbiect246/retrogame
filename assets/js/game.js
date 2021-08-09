@@ -36,9 +36,12 @@ loadSprite("blueBrick", "sprites/brick-blue.png")
 loadSprite("coin", "sprites/ci-coin.png")
 loadSprite("code-scroll", "sprites/code-scroll.png")
 loadSprite("coffee", "sprites/coffee.png")
+loadSprite("exit-sign-top", "sprites/exit-sign-top.png")
+loadSprite("exit-sign-lower", "sprites/exit-sign-lower.png")
 loadSprite("github", "sprites/github.png")
 loadSprite("gold-code-scroll", "sprites/gold-code-scroll.png")
 loadSprite("grass-rubble-original", "sprites/grass-rubble-original.png")
+loadSprite("grass-rubble-blue", "sprites/grass-rubble-blue.png")
 loadSprite("greyBrick", "sprites/grey-brick.png")
 loadSprite("greyBrickExplode", "sprites/grey-brick-explode.png", {
     sliceX: 5,
@@ -98,6 +101,7 @@ loadSprite("jim", "sprites/super-jim-32x32.png", {
         },
     },
 })
+loadSprite("title", "sprites/title.png")
 
 loadSprite('sky', 'sprites/sky_fc.png')
 loadSprite('farMountains', 'sprites/far_mountains_fc.png')
@@ -109,7 +113,7 @@ loadSprite('cloudsFront', 'sprites/clouds_front_fc.png')
 
 const WALK_SPEED = 120
 const RUN_SPEED = 180
-const JUMP_FORCE = 500
+const JUMP_FORCE = 400
 const BIG_JUMP_FORCE = 600
 let CURRENT_JUMP_FORCE = JUMP_FORCE
 const CERTAIN_DEATH = 1500
@@ -129,22 +133,20 @@ let LINES_OF_CODE = 0
 
 scene("splash", () => {
     add([
-        text(`
-        Welcome to Super Jim 2021 
-
-        Our hero Jim needs to rescue his
-        Portfolio Project 6 from the minions
-        of Imposter Syndrome.
-
-        To earn a Distinction he will need
-        to gather lines of code, peruse Stack
-        Overflow, check Slack and drink lots
-        of coffee.
-        
-        Hit SPACEBAR to start!`
-        ),
+        sprite("title"),
         origin("center"),
-		pos(width() / 2, height() / 2),
+        pos(width() / 2, 220)
+    ])
+
+    add([
+        text("Help Jim rescue his Portfolio Project Six\n\n from the " + 
+        "minions of Imposter Syndrome\n\n and the pesky Semicolons.\n\n" + 
+        "\n\nTo earn a Distinction he will need to\n\n gather lines of code," + 
+        " peruse Stack Overflow,\n\n" + 
+        "check Slack and drink lots of coffee!\n\n\n\n" + 
+        "Hit SPACEBAR to start!"),
+        origin("center"),
+		pos(width() / 2, 480),
     ])
     keyPress("space", () => {
 		go("game", {level: 0, score: 0});
@@ -200,51 +202,71 @@ scene("game", ({level, score}) => {
 
     const maps = [
         [
-            '                                                                                                                                                                                                                ',                
-            '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                                ',
-            '                      m                                                         bbbbbbbb   bbbm              m           bbb    bmmb                                                        oo                  ',
-            '                                                                                                                                                                                           ooo                  ',
-            '                                                                                                                                                                                          oooo                  ',
-            '                                                                m                                                                                                                        ooooo        G         ',
-            '                M   bNbnb                     ()         12                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
-            '                             G        ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
-            '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                  ',
-            '                            lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o         ',
+            'o                                                                                                                                                                                                                BB',                
+            'o                                                                                                                                                                                                                BB',
+            'o                                                                                                                                                                                                                BB',
+            'o                                                                                                                                                                                                                BB',
+            'o                                                                                                                                                                                                                BB',
+            'o                     m                                                         bbbbbbbb   bbbN              N           bbb    bNNb                                                        oo                   BB',
+            'o                                                                                                                                                                                          ooo                   BB',
+            'o                                                                                                                                                                                         oooo                  £BB',
+            'o                                                               m                                                                                                                        ooooo        G         $BB',
+            'o               M   bNbnb                     ()         ()                  bNb              b     bb    m  N  m     b          bb      o  o          oo  o            bbNb            oooooo                   BB',
+            'o                            G        ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                   BB',
+            'o                           ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                 12BB',
+            'o                           lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o        lrBB',
+            'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  gggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+            'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  oooooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+        ],
+        [
+            'o                                                                                                                                                                                                               ',                
+            'o                                                                                                                                                                                                               ',
+            'o                                                                                                                                                                                                               ',
+            'o                                                                                                                                                                                                               ',
+            'o                                                                                                                                                                                                               ',
+            'o                     m                                                         bbbbbbbb   bbbNb        bbbbbNbbbbb      bbb   bbNNb                                                        oo                  ',
+            'o                                                                                                                                                                                          ooo                  ',
+            'o                                                                                                                                                                                         oooo                  ',
+            'o                                                               m                                                                                                                        ooooo        G         ',
+            'o               M   bNbnb                     ()         ()                  bNb              b     bb    m  m  m     b          bb      o  o          oo  o            bbNb            oooooo                  ',
+            'o                                     ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
+            'o                           ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                12',
+            'o    ; ; ; ; ; ; ; ; ;      lr    i   lr      lr    ;    lr                                                                           oooo  oooo  i ooooo  oooo    lr         i    lrooooooooo        o       lr',
             'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
             'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
         ],
         [
-            '                                                                                                                                                                                                                ',                
-            '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                                ',
-            '                                                                                                                                                                                                                ',
-            '                      m                                                         bbbbbbbb   bbbm              m           bbb    bmmb                                                        oo                  ',
-            '                                                                                                                                                                                           ooo                  ',
-            '                                                                                                                                                                                          oooo                  ',
-            '                                                                m                                                                                                                        ooooo        G         ',
-            '                M   bNbnb                     ()         ()                  bmb              b     bb    m  m  m     b          bb      o  o          oo  o            bbmb            oooooo                  ',
-            '                                      ()      lr         lr                                                                             oo  oo        ooo  oo                          ooooooo                  ',
-            '                            ()        lr      lr         lr                                                                            ooo  ooo      oooo  ooo     ()              () oooooooo                12',
-            '     ; ; ; ; ; ; ; ; ;      lr    i   lr      lr    ;    lr                                                                           oooo  oooo    ooooo  oooo    lr              lrooooooooo        o       lr',
-            'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggg   gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg  ggggggggggggggggggggggggggggggggggggggggggggggggggggg',
-            'ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooo   oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo  ooooooooooooooooooooooooooooooooooooooooooooooooooooo',
+            'z                                                                                                                                                                                                                  ',
+            'z                                                                                                                                                                                                                  ',
+            'z                                                                                                                                                                                                                BB',
+            'z                                                                                                                             @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ #                                              BB',
+            'z            uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu    uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu                           BB',
+            'z                                                                                      uuuu         uu    uu                                                                                                     BB',
+            'z                                                                                      uuuu         uu    uu                  cccccc                                                                             BB',
+            'z                                                              cccccc              uuuu             uu    uu                  uuuuuu                                                                             BB',
+            'z                                                          z   zzzzzz   z          uuuu             uu    uu    uu            uuuuuu                                                                            £BB',
+            'z                                                          z c z    z c z          uu           cccCuu    uu    uu  uuuu                          cccccccccc                                                    $BB',
+            'z             NMNmN           u  u                         zzzzz    zzzzz          uuuuuuuu     uuuuuu    uucu  uu                          u     uuuuuuuuuu                                                     BB',
+            'z                          u  u  u  u      u                                           uuuu               uuuu  uu                       u  u                                                                    BB',
+            'z                       u  u  u  u  u      u  u                                        uuuu                                           u  u  u                                         u            G           12BB',
+            'z                    u  u  u  u  u  u   ;  u  u                                        uuuu                         u    i         u  u  u  u               u  ;     u     ;          u   u   i    u           lrBB',
+            'zRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR  RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR  RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR          RRRRRRRRRRRRRRRRRRRRRRRRRRR   RRRRRRRRRRRRRRRRRRRRRRRRR',
+            'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu  uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu  uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu          uuuuuuuuuuuuuuuuuuuuuuuuuuu   uuuuuuuuuuuuuuuuuuuuuuuuu',
         ]
     ]
-
+    
     const levelCfg = {
         width: 32,
         height: 32,
         '-': [sprite('blank'), solid(), scale(1)],
         'b': [sprite('brick'), solid(), scale(1), 'destructible'],
-        'B': [sprite('brownBrick'), solid(), scale(0.75), 'destructible', 'wall'],
-        'z': [sprite('blueBrick'), solid(), scale(1), 'wall'],
+        'B': [sprite('brownBrick'), solid(), scale(1), 'destructible', 'wall'],
+        'z': [sprite('blueBrick'), solid(), scale(1), 'wall', 'destructible'],
         'c': [sprite('coin'), scale(0.8), 'coin'],
         '@': [sprite('code-scroll'), scale(0.75), 'code-scroll'],
         'C': [sprite('coffee'), scale(0.75), 'coffee'],
+        '£': [sprite('exit-sign-top')],
+        '$': [sprite('exit-sign-lower')],
         'G': [sprite('github'), scale(0.75), 'github'],
         '#': [sprite('gold-code-scroll'), scale(0.75), 'gold-code-scroll'],
         'g': [sprite('grass-rubble-original'), solid()],
@@ -254,10 +276,11 @@ scene("game", ({level, score}) => {
         'n': [sprite('mystery-box'), solid(), 'mystery-box-slack'],
         'N': [sprite('mystery-box'), solid(), 'mystery-box-code'],
         ';': [sprite('semi'), body(), {dir: -1}, 'baddie', {timer: 0}, 'semi', scale(0.8)],
+        'R': [sprite('grass-rubble-blue'), solid()],
         's': [sprite('stack'), scale(1)],
         'S': [sprite('slack'), scale(1), 'slack', body(), scale(0.8), {dir: 1}, {timer: 0}],
         'o': [sprite('rubble'), solid()],
-        'u': [sprite('rubble-blue'), solid()],
+        'u': [sprite('rubble-blue'), solid(), 'destructible', 'wall'],
         'l': [sprite('pipeLeft'), solid(), scale(1), 'wall'],
         'r': [sprite('pipeRight'), solid(), scale(1), 'wall'],
 
@@ -564,6 +587,7 @@ scene("game", ({level, score}) => {
 
 scene('lose', ({ score, level }) => {
     add([text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), origin('left'), pos(width()/2, height()/ 2)])
+    LINES_OF_CODE = 0
     keyPress("space", () => {
 		go("game", {level: level, score: score});
 	});
@@ -577,12 +601,15 @@ scene('gameover', ({score}) => {
         scale(2)
     ])
 
-    add([
+    const gameOver = add([
         text('Game Over'),
         pos((width()/2), (height()/2)),
-        origin('center'),
-        scale(4)
+        origin('center')
     ])
+
+    gameOver.action(() => {
+        gameOver.scale = Math.sin(time()) * 5;
+	});
     
     add([
         text('You let Jim down!'),
@@ -605,6 +632,7 @@ scene('gameover', ({score}) => {
         scale(2)
     ])
 
+    LINES_OF_CODE = 0
     keyPress("space", () => {
         LIVES_REMAINING = 3; //needed to put LIVES_REMAINING back to 3
         go("game", {level: 0, score: 0});
