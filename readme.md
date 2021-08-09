@@ -151,11 +151,11 @@ App was deployed to Github Pages and can be accessed [here](https://debbiect246.
 We all worked in different ways but overall the process used by collaborators was as follows:
 
 1. Debbie created a new Github repo for the project.
-2. Branches were created for Debbie, Matt, Ed and Monica and work was done on these branches and then pull requests made.  Pull requests were reviewed by other team members and merged when appropriate.
+2. Branches were created for Debbie, Matt, Ed and Monika and work was done on these branches and then pull requests made.  Pull requests were reviewed by other team members and merged when appropriate.
 3. Team discussions were held about how to develop the game.  
 4. Team coding sessions were done so that those people working on different parts of functionality for the game were able to ask further questions and get support in live time.
-5. A project board was created in github and team members were able to select cards to work on. Matt spent some time on designing wireframes and assets for the game, Ed and Monica spent some time on the assets and scenes for the game and Debbie spent time setting up the repo, reviewing and merging some pull requests - other people could also do this for other team member's code.  Debbie also spent time updating the readme at regular intervals and coding the instruction screen and leaderboard.
-6. Testing was done at regular intervals and the game reviewed during group discussions each day, usually starting around 8pm and going forward into the morning.
+5. A project board was created in github and team members were able to select cards to work on. Matt spent time on designing wireframes and assets for the game, Ed and Monika spent time on the assets and scenes for the game and Debbie spent time setting up the repo and reviewing and merging some pull requests - other people could also do this for other team member's code.  Debbie spent time coding the instruction screen and leaderboard. All in all, it was a team effort.
+6. Testing was done at regular intervals and the game reviewed during group discussions each day, usually starting around midday and going forward into the morning.
 7. We all had to learn Kaboom JS, which is a relatively new Javascript library. We went on to use it to generate ideas for the game and to create the relevant sprites, scenes and maps. Matt created the wireframes for everyone to work from.
 8. Once we had started on the initial process of creating the game, Debbie worked on the readme, keeping it up to date and monitoring the commits that were taking place as well as updating the hackathon app with details of the game's live link and Github link.
   
