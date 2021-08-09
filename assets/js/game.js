@@ -364,8 +364,8 @@ scene("game", ({level, score}) => {
     ])
 
     // Controls and level display at start
-    add([text('Level ' + parseInt(level + 1) ), pos(width() / 4, height() / 4)])
-    add([text(`ARROWS: Move\nSPACE : Jump\nSHIFT : Run\nDOWN  : Enter pipe`), pos(width() / 4, height() / 3)])
+    add([text('Level ' + parseInt(level + 1) ), pos(width() / 5, height() / 4)])
+    add([text(`ARROWS: Move\nSPACE : Jump\nSHIFT : Run\nDOWN  : Enter pipe`), pos(width() / 5, height() / 3)])
 
     // Player function to make Jim grow
     function makeBig() {
