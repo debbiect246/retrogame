@@ -118,27 +118,27 @@ This was not achieved within the timeframe.
 
 Attempts to resolve this included changes to the scale of sprites, applying areas to sprites, reducing the player's maximum velocity. The issue was mitigated but is still present, albeit inconsistently
 
-2.Boundary issues between sprites
+2. Boundary issues between sprites
 
 Issues remain, as part of Matt's epic journey to create assets for the game.
 
-3.Resonsiveness of canvas on resizing, and scaling issues
+3. Resonsiveness of canvas on resizing, and scaling issues
 
 Responsiveness was not a requirement for the project, but work required to ensure scaling is fixed for different screens sizes and on browser resizing.
 
-4.Player would die if falling on an enemy without the isJumping value being true
+4. Player would die if falling on an enemy without the isJumping value being true
 
 **Resolved** on discovery of the `falling()` Kaboom method.
 
-5.Enemies would not bounce off solid objects when running into them
+5. Enemies would not bounce off solid objects when running into them
 
 **Resolved** by reducing the scaling of wall objects
 
-6.Animations would not advance during keyDown event listeners
+6. Animations would not advance during keyDown event listeners
 
 **Resolved** by adding conditional statement to the event listner, checking the `isMoving` value
 
-7.Character sprite would not change direction
+7. Character sprite would not change direction
 
 **Resolved** by applying a negative scale to the x axis on the respective event listeners.
 
