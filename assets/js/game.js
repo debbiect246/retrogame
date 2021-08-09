@@ -267,6 +267,24 @@ scene("game", ({level, score}) => {
             'z                    u  u  u  u  u  u   ;  u  u                                        uuuu                         u    i         u  u  u  u               u  ;     u     ;          u   u   i    u           lrBB',
             'zRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR  RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR  RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR          RRRRRRRRRRRRRRRRRRRRRRRRRRR   RRRRRRRRRRRRRRRRRRRRRRRRR',
             'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu  uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu  uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu          uuuuuuuuuuuuuuuuuuuuuuuuuuu   uuuuuuuuuuuuuuuuuuuuuuuuu',
+        ],
+        [
+            'z                                                                                                                                                                                                                  ',
+            'z                                                                                                                                                                                                                  ',
+            'z                                                                                                                                                                                                                BB',
+            'z                                                                                                                                                                                                                BB',
+            'z            uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu                                                                                                           BB',
+            'z                                                                                      uuuu                                                                                                                      BB',
+            'z                                                                                      uuuu                                   @@@@@@                                                                             BB',
+            'z                                                              cccccc              uuuu                                       uuuuuu                                                                             BB',
+            'z                                                          z   zzzzzz   z          uuuu                   uu    uu            uuuuuu                                                                            £BB',
+            'z                                                          z c z    z c z          uu           @@@Cuu    uu    uu  uuuu                          cccccccccc                                                    $BB',
+            'z             NMNmN uuuuu  u  u  u                zzzzz    zzzzz    zzzzz          uuuuuuuu     uuuuuu    uu#u  uu                                uuuuuuuuuu                                                     BB',
+            'z                       u  u  u  u  u      u                                           uuuu               uuuu  uu                                                                                               BB',
+            'z                       u  u  u  u  u      u  u                                        uuuu                                                                                           u            G           12BB',
+            'z                       u                                                                                           u    i         u                        u  ;     u     ;          u   u   i    u           lrBB',
+            'zRRRRRRRRRRRRRRRRRRRRRRRR                                                                                           RRRRRRRRRRRRRRRR         RRRRR          RRRRRRRRRRRRRRRRRRRRRRRRRRR   RRRRRRRRRRRRRRRRRRRRRRRRR',
+            'uuuuuuuuuuuuuuuuuuuuuuuuu                                                                                           uuuuuuuuuuuuuuuu         uuuuu          uuuuuuuuuuuuuuuuuuuuuuuuuuu   uuuuuuuuuuuuuuuuuuuuuuuuu',
         ]
     ]
     
