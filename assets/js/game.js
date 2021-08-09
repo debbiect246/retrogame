@@ -146,8 +146,8 @@ scene("splash", () => {
     add([
         sprite("title"),
         origin("center"),
-        pos(width() / 2, 100),
-        scale(0.7)
+        pos(width() / 2, 140),
+        scale(1)
     ])
 
     add([
@@ -158,8 +158,8 @@ scene("splash", () => {
         "check Slack, and drink lots of coffee!\n\n\n\n" + 
         "Hit SPACEBAR to start!"),
         origin("center"),
-		pos(width() / 2, 300),
-        scale(0.7)
+		pos(width() / 2, 460),
+        scale(1)
     ])
     keyPress("space", () => {
 		go("game", {level: 0, score: 0});
@@ -637,7 +637,7 @@ scene('lose', ({ score, level }) => {
         text(`Lives remaining: ${LIVES_REMAINING}\n\nHit SPACE to retry the level!`), 
         origin('left'), 
         pos(width()/2, height()/ 2),
-        scale(0.8)
+        scale(1)
     ])
     LINES_OF_CODE = 0
     keyPress("space", () => {
